@@ -31,62 +31,40 @@
     </div>
     <div class="scrollbar-sidebar">
         <div class="app-sidebar__inner">
+        <?php
+           $url = $_SERVER['REQUEST_URI'];
+           $arr = explode('/',$url);
+           $path = $arr[count($arr)-2];
+         ?>
             <ul class="vertical-nav-menu">
                 <li class="app-sidebar__heading">Dashboards</li>
                 <li>
-                    <a href="index.html" class="mm-active">
+                    <a href="<?php echo BASE_URL ?>admin/index.php" class="<?php echo $path == 'admin' ? 'mm-active' : ''; ?>">
                         <i class="metismenu-icon pe-7s-home"></i>
                         Dashboard
                     </a>
                 </li>
-                <li class="app-sidebar__heading">UI Components</li>
+                <li class="app-sidebar__heading">Management</li>
                 <li>
-                    <a href="#">
-                        <i class="metismenu-icon pe-7s-diamond"></i>
-                        Elements
-                        <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
+                    <a href="<?php echo BASE_URL ?>admin/product/index.php" class="<?php echo $path == 'product' ? 'mm-active' : ''; ?>">
+                        <i class="metismenu-icon pe-7s-next-2"></i>
+                        Product
+                       
                     </a>
-                    <ul>
-                        <li>
-                            <a href="elements-buttons-standard.html">
-                                <i class="metismenu-icon"></i>
-                                Buttons
-                            </a>
-                        </li>
-                        <li>
-                            <a href="elements-dropdowns.html">
-                                <i class="metismenu-icon">
-                                </i>Dropdowns
-                            </a>
-                        </li>
-
-                    </ul>
+                   
                 </li>
                 <li>
-                    <a href="#">
-                        <i class="metismenu-icon pe-7s-car"></i>
-                        Components
-                        <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
+                    <a href="<?php echo BASE_URL ?>admin/category/index.php" class="<?php echo $path == 'category' ? 'mm-active' : ''; ?>">
+                        <i class="metismenu-icon pe-7s-menu"></i>
+                        Category
+                       
                     </a>
-                    <ul>
-                        <li>
-                            <a href="components-tabs.html">
-                                <i class="metismenu-icon">
-                                </i>Tabs
-                            </a>
-                        </li>
-                        <li>
-                            <a href="components-accordions.html">
-                                <i class="metismenu-icon">
-                                </i>Accordions
-                            </a>
-                        </li>
-                    </ul>
+                  
                 </li>
                 <li>
-                    <a href="tables-regular.html">
-                        <i class="metismenu-icon pe-7s-display2"></i>
-                        Tables
+                    <a href="<?php echo BASE_URL ?>admin/user/index.php" class="<?php echo $path == 'user' ? 'mm-active' : ''; ?>">
+                        <i class="metismenu-icon pe-7s-user"></i>
+                        User
                     </a>
                 </li>
 

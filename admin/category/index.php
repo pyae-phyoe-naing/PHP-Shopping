@@ -1,13 +1,13 @@
 <?php
-require('../init.php');
-$title = 'Dashboard';
+require('../../init.php');
+$title = 'Category';
 if (!isset($_SESSION['user'])) {
     setSession('errorModal', 'Account Login ဝင်ရန်လိုအပ်ပါသည်။');
     redirect('login.php');
     die();
 }
 
-require('layout/header.php');
+require('../layout/header.php');
 ?>
 
 <div class="app-main__inner">
@@ -75,4 +75,4 @@ require('layout/header.php');
     </div>
 </div>
 
-<?php require('layout/footer.php') ?>
+<?php require('../layout/footer.php') ?>

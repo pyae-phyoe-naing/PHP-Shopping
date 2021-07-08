@@ -6,6 +6,12 @@ function setSession($key, $message)
 	}
 	$_SESSION[$key] = $message;
 }
+function checkSession($key){
+	if(isset($_SESSION[$key])){
+		return true;
+	}
+	return false;
+}
 function getSession($key)
 {
 

@@ -19,3 +19,9 @@ function getSingle($sql,$params=[]){
     $stmt->execute($params);
     return $stmt->fetch(PDO::FETCH_OBJ);
 }
+function getAll($sql,$params=[]){
+    global $conn;
+    $stmt = $conn->prepare($sql);
+    $stmt->execute($params);
+    return $stmt->fetch(PDO::FETCH_ASSOC);
+}
