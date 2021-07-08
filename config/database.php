@@ -11,3 +11,11 @@ try {
 } catch (Exception $e) {
     echo 'Database connection fail : '.$e->getMessage();
 }
+
+
+function getSingle($sql,$params=[]){
+    global $conn;
+    $stmt = $conn->prepare($sql);
+    $stmt->execute($params);
+    return $stmt->fetch(PDO::FETCH_OBJ);
+}

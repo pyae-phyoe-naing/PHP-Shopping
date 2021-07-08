@@ -36,10 +36,14 @@
     </div>
 </div>
 </div>
-<script src="http://maps.google.com/maps/api/js?sensor=true"></script>
 </div>
 </div>
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 <script type="text/javascript" src="<?php echo BASE_URL ?>admin/assets/scripts/main.js"></script>
+<script type="text/javascript" src="<?php echo BASE_URL ?>admin/assets/scripts/admin.js"></script>
+<?php require 'toast.php';  ?>
+
 </body>
 
 </html>

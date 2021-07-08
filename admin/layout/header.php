@@ -1,3 +1,4 @@
+
 <!doctype html>
 <html lang="en">
 
@@ -70,16 +71,20 @@
                                         <div tabindex="-1" role="menu" aria-hidden="true" class="dropdown-menu dropdown-menu-right">
                                             <button type="button" tabindex="0" class="dropdown-item">Actions</button>
                                             <div tabindex="-1" class="dropdown-divider"></div>
-                                            <button type="button" tabindex="0" class="dropdown-item">Dividers</button>
+                                            <a href="<?php echo BASE_URL ?>admin/logout.php" type="button" tabindex="0" class="dropdown-item">Logout</a>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="widget-content-left  ml-3 header-user-info">
                                     <div class="widget-heading">
-                                        Alina Mclourd
+                                        <?php
+                                           echo isset($_SESSION['user']) ?  $_SESSION['user']->name : 'Need Login';
+                                        ?>
                                     </div>
                                     <div class="widget-subheading">
-                                        VP People Manager
+                                    <?php
+                                           echo isset($_SESSION['user']) ?  $_SESSION['user']->phone : 'Need Login';
+                                        ?>
                                     </div>
                                 </div>
 

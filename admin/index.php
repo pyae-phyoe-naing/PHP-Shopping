@@ -1,5 +1,11 @@
 <?php 
 require('../init.php'); 
+if(!isset($_SESSION['user'])){
+    setSession('errorModal','Account Login ဝင်ရန်လိုအပ်ပါသည်။');
+    redirect('login.php');
+    die();
+}
+
 require('layout/header.php'); 
 ?>
 
