@@ -42,7 +42,7 @@ require('../layout/header.php');
                 <div class="card-header">Category List</div>
                 <div class="card-body">
                     <p>
-                        <a href="<?php echo BASE_URL; ?>admin/category/create.php"  class="btn btn-success">create category</a>
+                        <a href="<?php echo BASE_URL; ?>admin/category/create.php" class="btn btn-success">create category</a>
                     </p>
                     <table class="table table-bordered">
                         <thead>
@@ -94,7 +94,7 @@ require('../layout/header.php');
                                         </td>
                                         <td class='text-center'>
                                             <a href="edit.php?slug=<?php echo $category['slug']; ?>" class="btn btn-primary mr-2">Edit</a>
-                                            <a href="delete.php?slug=<?php echo $category['slug']; ?>" class="btn btn-danger " onclick="return confirm('Are you sure delete')">Delete</a>
+                                            <button onclick="deleteCat('<?php echo $category['slug']; ?>')" class="btn btn-danger ">Delete</button>
                                         </td>
                                     </tr>
                             <?php }
@@ -135,7 +135,29 @@ require('../layout/header.php');
 </div>
 
 <?php require('../layout/footer.php') ?>
+<script>
+    function deleteCat(slug) {
 
+        Swal.fire({
+            title: 'Are you sure delete?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            reverseButtons: true,
+            confirmButtonText: 'Confirm',
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            showCancelButton: true,
+            preConfirm: () => {
+                $.get(`delete.php?slug=${slug}`)
+            },
+        }).then(res => {
+            if(res.isConfirmed){
+                location.reload();
+            }
+        })
+
+    }
+</script>
 
 </body>
 
