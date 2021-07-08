@@ -1,4 +1,12 @@
 <?php
+
+####### Replace URL
+function set_url( $url )
+{
+    echo("<script>history.replaceState({},'','$url');</script>");
+}
+
+##################
 function setSession($key, $message)
 {
 	if (isset($_SESSION[$key])) {

@@ -1,3 +1,13 @@
+<?php
+
+if (isset($_SESSION['user']) && $_SESSION['user']->role != 1) {
+    unset($_SESSION['user']);
+    set_url("https://localhost/shopping/admin/login.php");
+    echo("<script>location.reload();</script>");
+  }
+ 
+
+?>
 <!doctype html>
 <html lang="en">
 
@@ -14,7 +24,7 @@
 </head>
 
 <body>
-    <div class="app-container app-theme-white body-tabs-shadow fixed-sidebar fixed-header">
+    <div class="app-container app-theme-white body-tabs-shadow fixed-sidebar fixed-header mb-5">
         <div class="app-header header-shadow">
             <div class="app-header__logo">
                 <div class="logo-src"></div>
@@ -53,17 +63,15 @@
                 $ary = explode('/shopping/admin/', $curUrl);
                 // pretty($ary[1]);
                 $page = $ary[1];
-                if($page == 'user/index.php' || $page == 'category/index.php' || $page == 'product/index.php' ){
+                if ($page == 'user/index.php' || $page == 'category/index.php' || $page == 'product/index.php') {
                 ?>
-                <div class="app-header-left">
-                    <form class="form-inline" method="post" 
-                      <?php if ($page == 'product' || $page == 'category' || $page == 'user') : ?> action="index.php"<?php endif; ?>
-                     >
-                        <input type="hidden" name="_token" value="<?php echo $_SESSION['_token'] ?>">
-                         <input type="text" name="search" class="form-control py-0" placeholder="search">
-                         <button type="submit" class="btn btn-primary  ml-2"><i class="pe-7s-search" style="font-size:18px"></i></button>
-                    </form>
-                </div>
+                    <div class="app-header-left">
+                        <form class="form-inline" method="post" <?php if ($page == 'product' || $page == 'category' || $page == 'user') : ?> action="index.php" <?php endif; ?>>
+                            <input type="hidden" name="_token" value="<?php echo $_SESSION['_token'] ?>">
+                            <input type="text" name="search" class="form-control py-0" placeholder="search">
+                            <button type="submit" class="btn btn-primary  ml-2"><i class="pe-7s-search" style="font-size:18px"></i></button>
+                        </form>
+                    </div>
                 <?php } ?>
                 <div class="app-header-right">
                     <div class="header-btn-lg pr-0">

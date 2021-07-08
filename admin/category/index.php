@@ -2,9 +2,7 @@
 require('../../init.php');
 $title = 'Category';
 if (!isset($_SESSION['user'])) {
-    setSession('errorModal', 'Account Login ဝင်ရန်လိုအပ်ပါသည်။');
-    redirect('login.php');
-    die();
+back('errorModal', 'Account Login ဝင်ရန်လိုအပ်ပါသည်။','login.php');
 }
 ## For search Paginate Set Cookie
 if (empty($_POST['search'])) {
