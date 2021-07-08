@@ -7,13 +7,13 @@ if (!isset($_SESSION['user'])) {
     die();
 }
 ## For search Paginate Set Cookie
-if(empty($_POST['search'])){
-    if(empty($_GET['pageno'])){
+if (empty($_POST['search'])) {
+    if (empty($_GET['pageno'])) {
         unset($_COOKIE['search']);
-        setcookie('search',null,-1,'/');
+        setcookie('search', null, -1, '/');
     }
-}else{
-    setcookie('search',$_POST['search'], time() + ( 8600 * 30) ,"/" );
+} else {
+    setcookie('search', $_POST['search'], time() + (8600 * 30), "/");
 }
 
 ## End
@@ -84,17 +84,17 @@ require('../layout/header.php');
                                         <td><?php echo escape(substr($category['description'], 0, 50)); ?></td>
                                         <td>
                                             <span class="mr-3">
-                                            <i class="pe-7s-date mr-1"></i>
-                                            <?php echo date_format(date_create($category['create_at']), "d F Y "); ?>
+                                                <i class="pe-7s-date mr-1"></i>
+                                                <?php echo date_format(date_create($category['create_at']), "d F Y "); ?>
                                             </span>
                                             <span>
-                                            <i class="pe-7s-clock mr-1"></i>
-                                            <?php echo date_format(date_create($category['create_at']), " h:i:a"); ?>
+                                                <i class="pe-7s-clock mr-1"></i>
+                                                <?php echo date_format(date_create($category['create_at']), " h:i:a"); ?>
                                             </span>
                                         </td>
                                         <td class='text-center'>
-                                            <a href="cat_edit.php?id=<?php echo $category['id']; ?>" class="btn btn-primary mr-2">Edit</a>
-                                            <a href="cat_delete.php?id=<?php echo $category['id']; ?>" class="btn btn-danger " onclick="return confirm('Are you sure delete')">Delete</a>
+                                            <a href="categoryEdit.php?id=<?php echo $category['id']; ?>" class="btn btn-primary mr-2">Edit</a>
+                                            <a href="categoryDelete.php?id=<?php echo $category['id']; ?>" class="btn btn-danger " onclick="return confirm('Are you sure delete')">Delete</a>
                                         </td>
                                     </tr>
                             <?php }
@@ -105,24 +105,24 @@ require('../layout/header.php');
                     <p>
                     <nav aria-label="Page navigation">
                         <ul class="pagination mt-3">
-                           <!-- First -->
+                            <!-- First -->
                             <li class="page-item ">
                                 <a class="page-link" href="?pageno=1">First</a>
                             </li>
                             <li class="page-item <?php echo $pageno <= 1 ? 'disabled' : '' ?>">
                                 <a class="page-link" href="<?php echo $pageno <= 1 ? '#' : '?pageno=' . ($pageno - 1); ?>">
-                                   Previous
+                                    Previous
                                 </a>
                             </li>
                             <li class="page-item"><a class="page-link" href="#"><?php echo $pageno; ?></a></li>
                             <li class="page-item <?php echo $pageno >= $total_pages ? 'disabled' : ''; ?>">
                                 <a class="page-link" href="<?php echo $pageno >= $total_pages ? '#' : '?pageno=' . ($pageno + 1);  ?>">
-                                   Next
+                                    Next
                                 </a>
                             </li>
                             <!-- last -->
                             <li class="page-item">
-                               <a class="page-link" href="?pageno=<?php echo $total_pages; ?>">Last</a>
+                                <a class="page-link" href="?pageno=<?php echo $total_pages; ?>">Last</a>
                             </li>
                         </ul>
                     </nav>
@@ -135,3 +135,8 @@ require('../layout/header.php');
 </div>
 
 <?php require('../layout/footer.php') ?>
+
+
+</body>
+
+</html>

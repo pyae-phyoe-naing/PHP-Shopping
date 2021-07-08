@@ -20,6 +20,3 @@
 <script type="text/javascript" src="<?php echo BASE_URL ?>admin/assets/scripts/admin.js"></script>
 <?php require 'toast.php';  ?>
 
-</body>
-
-</html>
