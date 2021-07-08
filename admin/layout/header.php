@@ -49,13 +49,16 @@
             <div class="app-header__content">
                 <?php
                 $curUrl =  $_SERVER["PHP_SELF"];
-                $ary = explode('/', $curUrl);
-                $page = $ary[count($ary)-2];
-                if($page == 'user' || $page == 'category' || $page == 'product' ){
+
+                $ary = explode('/shopping/admin/', $curUrl);
+                // pretty($ary[1]);
+                $page = $ary[1];
+                if($page == 'user/index.php' || $page == 'category/index.php' || $page == 'product/index.php' ){
                 ?>
                 <div class="app-header-left">
                     <form class="form-inline" method="post" 
-                    <?php if ($page == 'product' || $page == 'category' || $page == 'user') : ?> action="index.php"<?php endif; ?>
+                      <?php if ($page == 'product' || $page == 'category' || $page == 'user') : ?> action="index.php"<?php endif; ?>
+                     >
                         <input type="hidden" name="_token" value="<?php echo $_SESSION['_token'] ?>">
                          <input type="text" name="search" class="form-control py-0" placeholder="search">
                          <button type="submit" class="btn btn-primary  ml-2"><i class="pe-7s-search" style="font-size:18px"></i></button>

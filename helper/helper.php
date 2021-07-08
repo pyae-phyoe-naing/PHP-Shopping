@@ -19,14 +19,23 @@ function getSession($key)
 		echo $_SESSION[$key];
 	}
 }
+## print pretty
 function pretty($arr)
 {
 	echo "<pre>" . print_r($arr, true) . "</pre>";
 }
+## back with Session 
+function back($status,$message,$path){
+    setSession($status, $message);
+    redirect($path);
+    die();
+}
+## redirect
 function redirect($path)
 {
 	header("Location:$path");
 }
+## generate slug
 function slug($str)
 {
 	return time() . str_replace(' ', '-', $str);

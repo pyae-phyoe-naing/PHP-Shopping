@@ -93,8 +93,8 @@ require('../layout/header.php');
                                             </span>
                                         </td>
                                         <td class='text-center'>
-                                            <a href="categoryEdit.php?id=<?php echo $category['id']; ?>" class="btn btn-primary mr-2">Edit</a>
-                                            <a href="categoryDelete.php?id=<?php echo $category['id']; ?>" class="btn btn-danger " onclick="return confirm('Are you sure delete')">Delete</a>
+                                            <a href="edit.php?slug=<?php echo $category['slug']; ?>" class="btn btn-primary mr-2">Edit</a>
+                                            <a href="delete.php?slug=<?php echo $category['slug']; ?>" class="btn btn-danger " onclick="return confirm('Are you sure delete')">Delete</a>
                                         </td>
                                     </tr>
                             <?php }

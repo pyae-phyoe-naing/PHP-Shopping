@@ -2,9 +2,7 @@
 require '../init.php';
 $title = 'Login';
 if (isset($_SESSION['user'])) {
-    setSession('error', 'Already Login');
-    redirect('index.php');
-    die();
+    back('error', 'Already Login', 'index.php');
 }
 if ($_POST) {
     $email = $_POST['email'];
@@ -21,9 +19,7 @@ if ($_POST) {
                 $errors['password'] = 'Password မှားနေပါသည်။';
             }else{
                 if($user->role != 1){
-                    setSession('errorModal', 'Admin Account မဟုတ်ရင်ဝင်ခွင့်မရှိပါ');
-                    redirect('login.php');
-                    die();
+                    back('errorModal', 'Admin Account မဟုတ်ရင်ဝင်ခွင့်မရှိပါ','login.php');           
                 }
             }
         } else {
@@ -64,6 +60,7 @@ if ($_POST) {
                     </div>
                     <div class="card-body p-5">
                         <form action="" method="POST">
+                        <input type="hidden" name="_token" value="<?php echo $_SESSION['_token']; ?>">
                             <div class="form-group">
                                 <label for="email">Enter Email</label>
                                 <input value="htetaung@gmail.com" type="email" name="email" class="form-control">

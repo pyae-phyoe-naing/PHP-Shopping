@@ -12,7 +12,11 @@ try {
     echo 'Database connection fail : '.$e->getMessage();
 }
 
-
+function query($sql,$params=[]){
+    global $conn;
+    $stmt = $conn->prepare($sql);
+   return  $stmt->execute($params);
+}
 function getSingle($sql,$params=[]){
     global $conn;
     $stmt = $conn->prepare($sql);
