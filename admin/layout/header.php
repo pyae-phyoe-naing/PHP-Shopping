@@ -1,4 +1,3 @@
-
 <!doctype html>
 <html lang="en">
 
@@ -48,16 +47,21 @@
                 </span>
             </div>
             <div class="app-header__content">
+                <?php
+                $curUrl =  $_SERVER["PHP_SELF"];
+                $ary = explode('/', $curUrl);
+                $page = $ary[count($ary)-2];
+                if($page == 'user' || $page == 'category' || $page == 'product' ){
+                ?>
                 <div class="app-header-left">
-                    <div class="search-wrapper">
-                        <div class="input-holder">
-                            <input type="text" class="search-input" placeholder="Type to search">
-                            <button class="search-icon"><span></span></button>
-                        </div>
-                        <button class="close"></button>
-                    </div>
-
+                    <form class="form-inline" method="post" 
+                    <?php if ($page == 'product' || $page == 'category' || $page == 'user') : ?> action="index.php"<?php endif; ?>
+                        <input type="hidden" name="_token" value="<?php echo $_SESSION['_token'] ?>">
+                         <input type="text" name="search" class="form-control py-0" placeholder="search">
+                         <button type="submit" class="btn btn-primary  ml-2"><i class="pe-7s-search" style="font-size:18px"></i></button>
+                    </form>
                 </div>
+                <?php } ?>
                 <div class="app-header-right">
                     <div class="header-btn-lg pr-0">
                         <div class="widget-content p-0">
@@ -65,9 +69,7 @@
                                 <div class="widget-content-left">
                                     <div class="btn-group">
                                         <a data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="p-0 btn">
-                                            <img width="42" class="rounded-circle" 
-                                            src="<?php echo "https://ui-avatars.com/api/?background=0D8ABC&color=fff&name=". $_SESSION['user']->name;  ?>" 
-                                            alt="">
+                                            <img width="42" class="rounded-circle" src="<?php echo "https://ui-avatars.com/api/?background=0D8ABC&color=fff&name=" . $_SESSION['user']->name;  ?>" alt="">
                                             <i class="fa fa-angle-down ml-2 opacity-8"></i>
                                         </a>
                                         <div tabindex="-1" role="menu" aria-hidden="true" class="dropdown-menu dropdown-menu-right">
@@ -80,12 +82,12 @@
                                 <div class="widget-content-left  ml-3 header-user-info">
                                     <div class="widget-heading">
                                         <?php
-                                           echo isset($_SESSION['user']) ?  $_SESSION['user']->name : 'Need Login';
+                                        echo isset($_SESSION['user']) ?  $_SESSION['user']->name : 'Need Login';
                                         ?>
                                     </div>
                                     <div class="widget-subheading">
-                                    <?php
-                                           echo isset($_SESSION['user']) ?  $_SESSION['user']->phone : 'Need Login';
+                                        <?php
+                                        echo isset($_SESSION['user']) ?  $_SESSION['user']->phone : 'Need Login';
                                         ?>
                                     </div>
                                 </div>

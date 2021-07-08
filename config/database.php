@@ -23,5 +23,5 @@ function getAll($sql,$params=[]){
     global $conn;
     $stmt = $conn->prepare($sql);
     $stmt->execute($params);
-    return $stmt->fetch(PDO::FETCH_ASSOC);
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }

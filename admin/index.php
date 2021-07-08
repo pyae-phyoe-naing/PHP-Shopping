@@ -63,10 +63,11 @@ require('layout/header.php');
                     </div>
                     <div class="widget-content-right">
                         <?php
-                        $user_cont = getAll('select count(id) as user_count from users where role=0');
-                        //  pretty($user_cont['user_count']);
+                        $user = getAll('select count(id) as user_count from users where role=0');
+                        $count= $user[0]['user_count'];
+                         
                         ?>
-                        <div class="widget-numbers text-white"><span><?php echo $user_cont['user_count']; ?></span></div>
+                        <div class="widget-numbers text-white"><span><?php echo $count; ?></span></div>
                     </div>
                 </div>
             </div>

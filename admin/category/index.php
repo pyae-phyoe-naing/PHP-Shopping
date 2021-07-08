@@ -6,7 +6,17 @@ if (!isset($_SESSION['user'])) {
     redirect('login.php');
     die();
 }
+## For search Paginate Set Cookie
+if(empty($_POST['search'])){
+    if(empty($_GET['pageno'])){
+        unset($_COOKIE['search']);
+        setcookie('search',null,-1,'/');
+    }
+}else{
+    setcookie('search',$_POST['search'], time() + ( 8600 * 30) ,"/" );
+}
 
+## End
 require('../layout/header.php');
 ?>
 
@@ -16,10 +26,10 @@ require('../layout/header.php');
         <div class="page-title-wrapper">
             <div class="page-title-heading">
                 <div class="page-title-icon">
-                    <i class="pe-7s-home icon-gradient bg-mean-fruit">
+                    <i class="pe-7s-menu icon-gradient bg-mean-fruit">
                     </i>
                 </div>
-                <div> Dashboard
+                <div> Category
                 </div>
             </div>
 
@@ -27,47 +37,96 @@ require('../layout/header.php');
     </div>
     <!-- Main Content -->
     <div class="row">
-        <div class="col-md-6 col-xl-4">
-            <div class="card mb-3 widget-content bg-midnight-bloom">
-                <div class="widget-content-wrapper text-white">
-                    <div class="widget-content-left">
-                        <div class="widget-heading">Total Orders</div>
-                        <div class="widget-subheading">Last year expenses</div>
-                    </div>
-                    <div class="widget-content-right">
-                        <div class="widget-numbers text-white"><span>1896</span></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-6 col-xl-4">
-            <div class="card mb-3 widget-content bg-arielle-smile">
-                <div class="widget-content-wrapper text-white">
-                    <div class="widget-content-left">
-                        <div class="widget-heading">Clients</div>
-                        <div class="widget-subheading">Total Clients Profit</div>
-                    </div>
-                    <div class="widget-content-right">
-                        <div class="widget-numbers text-white"><span>$ 568</span></div>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">Category List</div>
+                <div class="card-body">
+                    <p>
+                        <button class="btn btn-success">create category</button>
+                    </p>
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>No</th>
+                                <th>Name</th>
+                                <th>Description</th>
+                                <th>Created At</th>
+                                <th>action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php
+                            if (!empty($_GET["pageno"])) {
+                                $pageno = $_GET["pageno"];
+                            } else {
+                                $pageno = 1;
+                            }
+                            $numOfrecord = 3;
+                            $offset = ($pageno - 1) * $numOfrecord;
 
-        <div class="col-md-6 col-xl-4">
-            <div class="card mb-3 widget-content bg-grow-early">
-                <div class="widget-content-wrapper text-white">
-                    <div class="widget-content-left">
-                        <div class="widget-heading"> Users</div>
-                        <div class="widget-subheading">Total Clients Profit</div>
-                    </div>
-                    <div class="widget-content-right">
-                        <?php
-                        $user_cont = getAll('select count(id) as user_count from users where role=0');
-                        //  pretty($user_cont['user_count']);
-                        ?>
-                        <div class="widget-numbers text-white"><span><?php echo $user_cont['user_count']; ?></span></div>
-                    </div>
+                            if (empty($_POST["search"]) && empty($_COOKIE['search'])) {
+                                $rawCategories = getAll("SELECT * FROM categories ORDER BY id DESC");
+                                $total_pages = ceil(count($rawCategories) / $numOfrecord);
+                                $categories = getAll("SELECT * FROM categories ORDER BY id DESC LIMIT $offset,$numOfrecord ");
+                            } else {
+                                $searchKey = empty($_POST['search']) ? $_COOKIE['search'] : $_POST['search'];
+                                $rawCategories = getAll("SELECT * FROM categories ORDER BY id DESC");
+                                $total_pages = ceil(count($rawCategories) / $numOfrecord);
+                                $categories = getAll("SELECT * FROM categories  WHERE name LIKE '%$searchKey%' ORDER BY id DESC LIMIT $offset,$numOfrecord ");
+                            }
+                            if ($categories) {
+                                $i = 1;
+                                foreach ($categories as $category) {
+                            ?>
+                                    <tr>
+                                        <td><?php echo $i++; ?></td>
+                                        <td><?php echo escape($category['name']); ?></td>
+                                        <td><?php echo escape(substr($category['description'], 0, 50)); ?></td>
+                                        <td>
+                                            <span class="mr-3">
+                                            <i class="pe-7s-date mr-1"></i>
+                                            <?php echo date_format(date_create($category['create_at']), "d F Y "); ?>
+                                            </span>
+                                            <span>
+                                            <i class="pe-7s-clock mr-1"></i>
+                                            <?php echo date_format(date_create($category['create_at']), " h:i:a"); ?>
+                                            </span>
+                                        </td>
+                                        <td class='text-center'>
+                                            <a href="cat_edit.php?id=<?php echo $category['id']; ?>" class="btn btn-primary mr-2">Edit</a>
+                                            <a href="cat_delete.php?id=<?php echo $category['id']; ?>" class="btn btn-danger " onclick="return confirm('Are you sure delete')">Delete</a>
+                                        </td>
+                                    </tr>
+                            <?php }
+                            } ?>
+                        </tbody>
+
+                    </table>
+                    <p>
+                    <nav aria-label="Page navigation">
+                        <ul class="pagination mt-3">
+                           <!-- First -->
+                            <li class="page-item ">
+                                <a class="page-link" href="?pageno=1">First</a>
+                            </li>
+                            <li class="page-item <?php echo $pageno <= 1 ? 'disabled' : '' ?>">
+                                <a class="page-link" href="<?php echo $pageno <= 1 ? '#' : '?pageno=' . ($pageno - 1); ?>">
+                                   Previous
+                                </a>
+                            </li>
+                            <li class="page-item"><a class="page-link" href="#"><?php echo $pageno; ?></a></li>
+                            <li class="page-item <?php echo $pageno >= $total_pages ? 'disabled' : ''; ?>">
+                                <a class="page-link" href="<?php echo $pageno >= $total_pages ? '#' : '?pageno=' . ($pageno + 1);  ?>">
+                                   Next
+                                </a>
+                            </li>
+                            <!-- last -->
+                            <li class="page-item">
+                               <a class="page-link" href="?pageno=<?php echo $total_pages; ?>">Last</a>
+                            </li>
+                        </ul>
+                    </nav>
+                    </p>
                 </div>
             </div>
         </div>

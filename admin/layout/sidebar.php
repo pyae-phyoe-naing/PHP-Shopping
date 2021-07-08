@@ -33,6 +33,8 @@
         <div class="app-sidebar__inner">
         <?php
            $url = $_SERVER['REQUEST_URI'];
+        //    $arr = explode('/shopping/admin/',$url);
+        //    pretty($arr[1]);
            $arr = explode('/',$url);
            $path = $arr[count($arr)-2];
          ?>

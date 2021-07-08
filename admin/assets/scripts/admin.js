@@ -1,3 +1,4 @@
+
 // Reuseable Toast
     function toastAlert(icon,message) {
         const Toast = Swal.mixin({
