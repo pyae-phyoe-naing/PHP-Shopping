@@ -5,7 +5,7 @@ if (!isset($_SESSION['user'])) {
     back('errorModal', 'Account Login ဝင်ရန်လိုအပ်ပါသည်။', 'login.php');
 }
 ##########################################
-## update category
+## create category
 if ($_POST) {
     $name = $_POST['name'];
     $description = $_POST['description'];
@@ -17,27 +17,16 @@ if ($_POST) {
     if (empty($description)) {
         $errors['description'] = 'Category description ဖြည့်ရန်လိုအပ်ပါသည်။';
     }
-    ## update
+    ## create
     if (empty($errors)) {
-      $cond = query('update categories set name=?,slug=?,description=? where slug=?',[$name,slug($name),$description,$_GET['slug']]);
+      $time = date("Y-m-d H:i:s");
+      $cond = query('insert into categories (name,slug,description,create_at) values (?,?,?,?)',[$name,slug($name),$description,$time]);
       if($cond){
-          back('success','category updated success','index.php');
+          back('success','category create success','index.php');
       }
     }
 }
 
-## get edit value
-##########################################
-## check exist slug value
-if (empty($_GET['slug'])) {
-    back('error', 'Category Not Found !', 'index.php');
-}
-## check slug value with category exist
-$slug = $_GET['slug'];
-$category = getSingle("select * from categories where slug=?", [$slug]);
-if (!$category) {
-    back('error', 'Category Not Found !', 'index.php');
-}
 
 require('../layout/header.php');
 ?>
@@ -48,10 +37,10 @@ require('../layout/header.php');
         <div class="page-title-wrapper">
             <div class="page-title-heading">
                 <div class="page-title-icon">
-                    <i class="pe-7s-edit icon-gradient bg-mean-fruit">
+                    <i class="pe-7s-menu icon-gradient bg-mean-fruit">
                     </i>
                 </div>
-                <div> Edit
+                <div> Create 
                 </div>
             </div>
 
@@ -62,25 +51,24 @@ require('../layout/header.php');
         <div class=" col-12">
             <div class="card">
                 <div class="card-header">
-                    Edit Category
+                    Create Category
                 </div>
                 <div class="card-body px-5 py-3">
                     <form action="" method="POST">
                         <input type="hidden" name="_token" class="form-control" value="<?php echo $_SESSION['_token']; ?>">
                         <div class="form-group">
                             <label for="email">Enter Category Name</label>
-                            <input value="<?php echo $category->name; ?>" type="text" name="name" class="form-control">
+                            <input  type="text" name="name" class="form-control">
                             <?php isset($errors) ? validate($errors, 'name') : '' ?>
-
                         </div>
                         <div class="form-group">
                             <label for="password">Enter Category Description</label>
-                            <textarea name="description" class="form-control"><?php echo $category->description; ?></textarea>
+                            <textarea name="description" class="form-control"></textarea>
                             <?php isset($errors) ? validate($errors, 'description') : '' ?>
                         </div>
 
                         <p class="my-3">
-                            <button class="btn btn-primary">Update</button>
+                            <button class="btn btn-primary">Create</button>
                         </p>
                     </form>
                 </div>

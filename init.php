@@ -1,4 +1,5 @@
 <?php
+date_default_timezone_set('Asia/Yangon');
 session_start();
 const BASE_URL = "https://localhost/shopping/";
 require 'config/database.php';

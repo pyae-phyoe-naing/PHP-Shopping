@@ -42,7 +42,7 @@ require('../layout/header.php');
                 <div class="card-header">Category List</div>
                 <div class="card-body">
                     <p>
-                        <button class="btn btn-success">create category</button>
+                        <a href="<?php echo BASE_URL; ?>admin/category/create.php"  class="btn btn-success">create category</a>
                     </p>
                     <table class="table table-bordered">
                         <thead>
