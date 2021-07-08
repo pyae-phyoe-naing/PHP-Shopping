@@ -19,6 +19,12 @@ if ($_POST) {
             ## check password
             if (!password_verify($password, $user->password)) {
                 $errors['password'] = 'Password မှားနေပါသည်။';
+            }else{
+                if($user->role != 1){
+                    setSession('errorModal', 'Admin Account မဟုတ်ရင်ဝင်ခွင့်မရှိပါ');
+                    redirect('login.php');
+                    die();
+                }
             }
         } else {
             $errors['email'] = 'Email မှားနေပါသည်။';
