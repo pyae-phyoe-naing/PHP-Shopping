@@ -1,6 +1,6 @@
 <?php
 require('../../init.php');
-$title = 'Edit Category';
+$title = 'Create Category';
 if (!isset($_SESSION['user'])) {
     back('errorModal', 'Account Login ဝင်ရန်လိုအပ်ပါသည်။', 'login.php');
 }
