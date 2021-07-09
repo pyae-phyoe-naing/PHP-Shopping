@@ -2,7 +2,7 @@
 require '../init.php';
 $title = 'Login';
 if (isset($_SESSION['user']) && $_SESSION['user']->role == 1) {
-    back('error', 'Already Login', 'index.php');
+    back('errorModal', 'သင့်အကောင့် Login ဝင်ပီးသားဖြစ်ပါသည်။', 'index.php');
 }
 if ($_POST) {
     $email = $_POST['email'];
