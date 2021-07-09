@@ -1,8 +1,17 @@
 <?php
 require('../../init.php');
-$title = 'Order';
+$title = 'Order Detail';
 if (!isset($_SESSION['user'])) {
     back('errorModal', 'Account Login ဝင်ရန်လိုအပ်ပါသည်။', 'login.php');
+}
+## For search Paginate Set Cookie
+if (empty($_POST['search'])) {
+    if (empty($_GET['pageno'])) {
+        unset($_COOKIE['search']);
+        setcookie('search', null, -1, '/');
+    }
+} else {
+    setcookie('search', $_POST['search'], time() + (8600 * 30), "/");
 }
 
 ## End
@@ -15,10 +24,10 @@ require('../layout/header.php');
         <div class="page-title-wrapper">
             <div class="page-title-heading">
                 <div class="page-title-icon">
-                    <i class="pe-7s-cart icon-gradient bg-mean-fruit">
+                    <i class="pe-7s-info icon-gradient bg-mean-fruit">
                     </i>
                 </div>
-                <div> Order
+                <div> Order Detail
                 </div>
             </div>
 
@@ -28,18 +37,22 @@ require('../layout/header.php');
     <div class="row">
         <div class="col-12">
             <div class="card">
-                <div class="card-header">Order List</div>
+                <div class="card-header">
+                        <a class="btn btn-secondary btn-sm" href="<?php echo BASE_URL; ?>admin/order/index.php">Back</a>
+                </div>
                 <div class="card-body">
 
                     <table class="table table-bordered">
                         <thead>
                             <tr>
                                 <th>No</th>
-                                <th>Customer</th>
-                                <th>Address</th>
+                                <th>Name</th>
+                                <th>Image</th>
+                                <th>Price</th>
+                                <th>Quantity</th>
                                 <th>Total Price</th>
                                 <th>Order Date</th>
-                                <th>Action</th>
+
                             </tr>
                         </thead>
                         <tbody>
@@ -53,30 +66,28 @@ require('../layout/header.php');
                             $offset = ($pageno - 1) * $numOfrecord;
 
                             if (empty($_POST["search"]) && empty($_COOKIE['search'])) {
-                                $rawData = getAll("SELECT * FROM sale_orders ORDER BY id DESC");
+                                $rawData = getAll("SELECT * FROM sale_order_detail WHERE sale_order_id=?", [$_GET['id']]);
                                 $total_pages = ceil(count($rawData) / $numOfrecord);
-                                $result = getAll("SELECT * FROM sale_orders ORDER BY id DESC LIMIT $offset,$numOfrecord ");
+                                $result = getAll("SELECT * FROM sale_order_detail WHERE sale_order_id=? ORDER BY id DESC LIMIT $offset,$numOfrecord ", [$_GET['id']]);
                             }
                             if ($result) {
                                 $i = 1;
                                 foreach ($result as $value) {
-                                    $user = getSingle("select * from users where id=? and role=0", [$value['user_id']]);
+                                    $product = getSingle("select * from products where id=?", [$value['product_id']]);
                             ?>
                                     <tr>
                                         <td><?php echo $i++; ?></td>
-                                        <td><?php echo escape($user->name); ?></td>
+                                        <td><?php echo escape($product->name); ?></td>
                                         <td>
-                                            <span class="mr-3">
-                                                <i class="pe-7s-map mr-1"></i>
-                                                <?php echo $user->address; ?>
-                                            </span>
-                                            <br>
-                                            <span>
-                                                <i class="pe-7s-phone mr-1"></i>
-                                                <?php echo $user->phone; ?>
-                                            </span>
+                                            <img src="<?php echo BASE_URL . 'admin/assets/images/products/' . $product->image;; ?>" width="50" height="50">
                                         </td>
-                                        <td><?php echo escape($value['total_price']); ?> MMK</td>
+                                        <td>
+                                            <?php echo $product->price; ?>
+                                        </td>
+                                        <td>
+                                            <?php echo $value['quantity']; ?>
+                                        </td>
+                                        <td><?php echo $value['quantity'] * $product->price; ?> MMK</td>
                                         <td>
                                             <span class="mr-3">
                                                 <i class="pe-7s-date mr-1"></i>
@@ -87,12 +98,7 @@ require('../layout/header.php');
                                                 <?php echo date_format(date_create($value['order_date']), " h:i:a"); ?>
                                             </span>
                                         </td>
-                                        <td class='text-center'>
-                                            <a href="order_detail.php?id=<?php echo $value['id']; ?>" class="btn btn-sm btn-success mr-2">
-                                                View
-                                            </a>
 
-                                        </td>
                                     </tr>
                             <?php }
                             } ?>
@@ -133,27 +139,7 @@ require('../layout/header.php');
 
 <?php require('../layout/footer.php') ?>
 <script>
-    // function deleteCat(slug) {
 
-    //     Swal.fire({
-    //         title: 'Are you sure delete?',
-    //         text: "You won't be able to revert this!",
-    //         icon: 'warning',
-    //         reverseButtons: true,
-    //         confirmButtonText: 'Confirm',
-    //         confirmButtonColor: '#3085d6',
-    //         cancelButtonColor: '#d33',
-    //         showCancelButton: true,
-    //         preConfirm: () => {
-    //             $.get(`delete.php?slug=${slug}`)
-    //         },
-    //     }).then(res => {
-    //         if(res.isConfirmed){
-    //             location.reload();
-    //         }
-    //     })
-
-    // }
 </script>
 
 </body>
