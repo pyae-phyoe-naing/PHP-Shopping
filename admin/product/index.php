@@ -74,7 +74,7 @@ require('../layout/header.php');
                                 $searchKey = empty($_POST['search']) ? $_COOKIE['search'] : $_POST['search'];
                                 $rawResult = getAll("SELECT * FROM products ORDER BY id DESC");
                                 $total_pages = ceil(count($rawResult) / $numOfrecord);
-                                $result = getAll("SELECT * FROM products  WHERE name LIKE '%$searchKey%' ORDER BY id DESC LIMIT $offset,$numOfrecord ");
+                                $result = getAll("SELECT * FROM products  WHERE name LIKE '%$searchKey%' or description LIKE '%$searchKey%' ORDER BY id DESC LIMIT $offset,$numOfrecord ");
                             }
                             if ($result) {
                                 $i = 1;

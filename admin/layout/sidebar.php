@@ -31,13 +31,13 @@
     </div>
     <div class="scrollbar-sidebar">
         <div class="app-sidebar__inner">
-        <?php
-           $url = $_SERVER['REQUEST_URI'];
-        //    $arr = explode('/shopping/admin/',$url);
-        //    pretty($arr[1]);
-           $arr = explode('/',$url);
-           $path = $arr[count($arr)-2];
-         ?>
+            <?php
+            $url = $_SERVER['REQUEST_URI'];
+            //    $arr = explode('/shopping/admin/',$url);
+            //    pretty($arr[1]);
+            $arr = explode('/', $url);
+            $path = $arr[count($arr) - 2];
+            ?>
             <ul class="vertical-nav-menu">
                 <li class="app-sidebar__heading">Dashboards</li>
                 <li>
@@ -51,17 +51,17 @@
                     <a href="<?php echo BASE_URL ?>admin/product/index.php" class="<?php echo $path == 'product' ? 'mm-active' : ''; ?>">
                         <i class="metismenu-icon pe-7s-next-2"></i>
                         Product
-                       
+
                     </a>
-                   
+
                 </li>
                 <li>
                     <a href="<?php echo BASE_URL ?>admin/category/index.php" class="<?php echo $path == 'category' ? 'mm-active' : ''; ?>">
                         <i class="metismenu-icon pe-7s-menu"></i>
                         Category
-                       
+
                     </a>
-                  
+
                 </li>
                 <li>
                     <a href="<?php echo BASE_URL ?>admin/user/index.php" class="<?php echo $path == 'user' ? 'mm-active' : ''; ?>">
@@ -69,7 +69,14 @@
                         User
                     </a>
                 </li>
-
+                
+                <li class="app-sidebar__heading"></li>
+                <li>
+                    <a href="<?php echo BASE_URL ?>admin/logout.php">
+                        <i class="metismenu-icon pe-7s-left-arrow"></i>
+                        Logout
+                    </a>
+                </li>
             </ul>
         </div>
     </div>

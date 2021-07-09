@@ -5,7 +5,7 @@
                 <span>Copyright <?php echo date('Y') ?>, All right reserved by Shopping.</span>
             </div>
             <div class="app-footer-right">
-                <span>Developed by <span class="text-primary">Pyae Phyoe Naing</span></span>
+                <span>Developed by <span class="text-primary">Htet Arkar Aung</span></span>
             </div>
 
         </div>
