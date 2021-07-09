@@ -56,10 +56,10 @@ function escape($html)
 }
 
 // For Validation
-function validate($errors, $value)
+function validate($errors, $value,$place="text-center")
 {
 	if (isset($errors[$value])) {
-		echo "<small class='text text-danger'><strong>" . $errors[$value] . "</strong></small>";
+		echo "<small class='text text-danger $place'><strong>" . $errors[$value] . "</strong></small>";
 	} else {
 		echo '';
 	}
