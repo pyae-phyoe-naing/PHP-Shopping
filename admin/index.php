@@ -110,8 +110,10 @@ require('layout/header.php');
                             $users = getAll("select * from users where role=0");
                             foreach ($users as $user) {
                             ?>
-                                <img class='ov-img rounded-circle' alt="" style=" margin-left: -25px;" width="40" 
-                                height="40" src="<?php echo "https://ui-avatars.com/api/?background=59B1F8&color=fff&name=" . $user['name'];  ?>">
+                                <img class='ov-img rounded-circle' alt="" style=" margin-left: -25px;"
+                                 width="<?php echo !$user['image'] ? '49' : '' ;?>"  height="<?php echo !$user['image'] ? '49' : '' ;?>"
+                                 src="<?php echo $user['image'] ? BASE_URL.'admin/assets/images/users/'.$user['image'] : 
+                                  "https://ui-avatars.com/api/?background=0D8ABC&color=fff&name=" . $user['name'];  ?>">
                             <?php } ?>
                         </div>
                     </div>
