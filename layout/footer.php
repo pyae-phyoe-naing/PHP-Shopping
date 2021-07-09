@@ -19,8 +19,8 @@
   </div>
 </footer>
 <!-- End footer Area -->
-
-<script src="<?php echo BASE_URL ?>asset/js/vendor/jquery-2.2.4.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.js?fbclid=IwAR1XX1FcmyPyWTDdlKjSOf1BW7KL0TVE67-xcOXD8b-7bByqS9kVrDd053k"></script>
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
 <script src="<?php echo BASE_URL ?>asset/js/vendor/bootstrap.min.js"></script>
 <script src="<?php echo BASE_URL ?>asset/js/jquery.ajaxchimp.min.js"></script>
@@ -33,6 +33,22 @@
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCjCGmQ0Uq4exrzdcL6rvxywDDOvfAu6eE"></script>
 <script src="<?php echo BASE_URL ?>asset/js/gmaps.min.js"></script>
 <script src="<?php echo BASE_URL ?>asset/js/main.js"></script>
-</body>
-
-</html>
+<script type="text/javascript" src="<?php echo BASE_URL ?>admin/assets/scripts/admin.js"></script>
+<?php require 'admin/layout/toast.php';  ?>
+<script>
+  function logout() {
+    Swal.fire({
+      text: "Logout ထွက်မှာသေချာပီလား ?",
+      icon: 'warning',
+      reverseButtons: true,
+      confirmButtonText: 'Confirm',
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      showCancelButton: true,
+      preConfirm: () => {
+        let url = "<?php echo BASE_URL ?>";
+        window.location.href = url + 'logout.php';
+      },
+    })
+  }
+</script>

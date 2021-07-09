@@ -1,6 +1,8 @@
 <?php
 require 'init.php';
-
+if(isset($_SESSION['user'])){
+	back('errorModal','Login ဝင်ပီးသားဖြစ်ပါသည်။','index.php');
+}
 if ($_POST) {
 	$name = $_POST['name'];
 	$email = $_POST['email'];

@@ -17,9 +17,9 @@ if ($_POST) {
             ## check password
             if (!password_verify($password, $user->password)) {
                 $errors['password'] = 'Password မှားနေပါသည်။';
-            }else{
-                if($user->role != 1){
-                    back('errorModal', 'Admin Account မဟုတ်ရင်ဝင်ခွင့်မရှိပါ','login.php');           
+            } else {
+                if ($user->role != 1) {
+                    back('errorModal', 'Admin Account မဟုတ်ရင်ဝင်ခွင့်မရှိပါ', 'login.php');
                 }
             }
         } else {
@@ -32,7 +32,7 @@ if ($_POST) {
     ## Login
     if (empty($errors)) {
         $_SESSION['user'] = $user;
-        setSession('success','Welcome '.$user->name);
+        setSession('success', 'Welcome ' . $user->name);
         redirect('index.php');
     }
 }
@@ -60,7 +60,7 @@ if ($_POST) {
                     </div>
                     <div class="card-body p-5">
                         <form action="" method="POST">
-                        <input type="hidden" name="_token" value="<?php echo $_SESSION['_token']; ?>">
+                            <input type="hidden" name="_token" value="<?php echo $_SESSION['_token']; ?>">
                             <div class="form-group">
                                 <label for="email">Enter Email</label>
                                 <input value="htetaung@gmail.com" type="email" name="email" class="form-control">

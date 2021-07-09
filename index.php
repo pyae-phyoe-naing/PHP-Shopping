@@ -1,6 +1,6 @@
 <?php
 require 'init.php';
-include('layout/header.php');
+require 'layout/header.php';
 ?>
 <!-- Start Filter Bar -->
 <div class="filter-bar d-flex flex-wrap align-items-center">
@@ -97,4 +97,8 @@ include('layout/header.php');
 	</div>
 </section>
 <!-- End Best Seller -->
-<?php include('layout/footer.php'); ?>
+<?php require 'layout/footer.php'; ?>
+
+</body>
+
+</html>
