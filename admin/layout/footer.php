@@ -16,6 +16,7 @@
 </div>
 <script src="https://code.jquery.com/jquery-3.6.0.js?fbclid=IwAR1XX1FcmyPyWTDdlKjSOf1BW7KL0TVE67-xcOXD8b-7bByqS9kVrDd053k"></script>
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="<?php echo BASE_URL ?>asset/chart_js/chart.min.js"> </script>
 <script type="text/javascript" src="<?php echo BASE_URL ?>admin/assets/scripts/main.js"></script>
 <script type="text/javascript" src="<?php echo BASE_URL ?>admin/assets/scripts/admin.js"></script>
 <?php require 'toast.php';  ?>

@@ -48,6 +48,14 @@
                 </li>
                 <li class="app-sidebar__heading">Management</li>
                 <li>
+                    <a href="<?php echo BASE_URL ?>admin/order/index.php" class="<?php echo $path == 'order' ? 'mm-active' : ''; ?>">
+                        <i class="metismenu-icon pe-7s-cart"></i>
+                        Order
+
+                    </a>
+
+                </li>
+                <li>
                     <a href="<?php echo BASE_URL ?>admin/product/index.php" class="<?php echo $path == 'product' ? 'mm-active' : ''; ?>">
                         <i class="metismenu-icon pe-7s-next-2"></i>
                         Product
@@ -69,7 +77,7 @@
                         User
                     </a>
                 </li>
-                
+
                 <li class="app-sidebar__heading"></li>
                 <li>
                     <a href="<?php echo BASE_URL ?>admin/logout.php">

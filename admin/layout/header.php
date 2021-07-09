@@ -63,7 +63,7 @@ if (isset($_SESSION['user']) && $_SESSION['user']->role != 1) {
                 $ary = explode('/shopping/admin/', $curUrl);
                 // pretty($ary[1]);
                 $page = $ary[1];
-                if ($page == 'user/index.php' || $page == 'category/index.php' || $page == 'product/index.php') {
+                if ($page == 'user/index.php' || $page == 'category/index.php' || $page == 'product/index.php' || $page == 'order/index.php') {
                 ?>
                     <div class="app-header-left">
                         <form class="form-inline" method="post" <?php if ($page == 'product' || $page == 'category' || $page == 'user') : ?> action="index.php" <?php endif; ?>>
