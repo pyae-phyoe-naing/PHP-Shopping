@@ -33,34 +33,35 @@ if ($_POST) {
     if (empty($description)) {
         $errors['description'] = 'Product description ဖြည့်ရန်လိုအပ်ပါသည်။';
     }
-
+    if (isset($_FILES['image']['name'])) {
+        $imagetype = $_FILES['image']['name'];
+        $supported_image = array('jfif', 'jpg', 'jpeg','png');
+        $ext = strtolower(pathinfo($imagetype, PATHINFO_EXTENSION));
+        if (!in_array($ext, $supported_image)) {
+            $errors['image'] = 'Product Image not allows image type';
+        }
+    }
     ## create
     if (empty($errors)) {
         ## get old image
-        $old_obj = getSingle('select * from products where slug=?',[$_GET['slug']]);
-       
+        $old_obj = getSingle('select * from products where slug=?', [$_GET['slug']]);
+
         ## check image extension
         if (!empty($_FILES['image']['name'])) {    // check empty if check isset error
-            $imagetype = $_FILES['image']['name'];
-            $supported_image = array('jfif', 'jpg', 'jpeg', 'png');
-            $ext = strtolower(pathinfo($imagetype, PATHINFO_EXTENSION));
-            if (in_array($ext, $supported_image)) {
-                unlink("../assets/images/products/" .$old_obj->image);
 
-                $file = "../assets/images/products/" . time() . str_replace(' ', '_', $_FILES["image"]['name']);
-                $tmpName = $_FILES['image']['tmp_name'];
-                move_uploaded_file($tmpName, $file);
-                $image = time(). str_replace(' ', '_', $_FILES["image"]['name']);
-            }else{
-                $errors['image'] = 'Product Image not allows image type';
-            }
-        }else{
+            unlink("../assets/images/products/" . $old_obj->image);
+
+            $file = "../assets/images/products/" . time() . str_replace(' ', '_', $_FILES["image"]['name']);
+            $tmpName = $_FILES['image']['tmp_name'];
+            move_uploaded_file($tmpName, $file);
+            $image = time() . str_replace(' ', '_', $_FILES["image"]['name']);
+        } else {
             $image = $old_obj->image;
         }
 
         $cond = query(
             'update products set name=?,slug=?,category_id=?,price=?,quantity=?,image=?,description=? where slug=?',
-            [$name, slug($name), $category_id, $price, $quantity, $image, $description,$_GET['slug']]
+            [$name, slug($name), $category_id, $price, $quantity, $image, $description, $_GET['slug']]
         );
         if ($cond) {
             back('success', 'product update success', 'index.php');
