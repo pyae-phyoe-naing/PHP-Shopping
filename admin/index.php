@@ -98,11 +98,11 @@ require('layout/header.php');
         </div>
 
     </div>
-    <div class="row  align-items-end">
+    <div class="row  align-items-end mt-3">
         <div class="col-12 col-xl-7">
             <div class="card overflow-hidden shadow mb-4">
                 <div class="">
-                    <div class="d-flex justify-content-between align-items-center p-3">
+                    <div class="d-flex justify-content-between align-items-center p-3 ">
                         <h5 class='mb-0'>Order - Customer</h5>
                         <div class="">
                             <img width="42" class="rounded-circle" alt="">
@@ -110,8 +110,8 @@ require('layout/header.php');
                             $users = getAll("select * from users where role=0");
                             foreach ($users as $user) {
                             ?>
-                                <img class='ov-img rounded-circle' alt="" style=" margin-left: -25px;" width="50" 
-                                height="50" src="<?php echo "https://ui-avatars.com/api/?background=3088D1&color=fff&name=" . $user['name'];  ?>">
+                                <img class='ov-img rounded-circle' alt="" style=" margin-left: -25px;" width="40" 
+                                height="40" src="<?php echo "https://ui-avatars.com/api/?background=59B1F8&color=fff&name=" . $user['name'];  ?>">
                             <?php } ?>
                         </div>
                     </div>
