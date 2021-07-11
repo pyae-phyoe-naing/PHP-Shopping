@@ -2,7 +2,7 @@
 require('../../init.php');
 $title = 'Category';
 if (!isset($_SESSION['user'])) {
-back('errorModal', 'Account Login ဝင်ရန်လိုအပ်ပါသည်။','login.php');
+back('errorModal', 'Account Login ဝင်ရန်လိုအပ်ပါသည်။','../login.php');
 }
 ## For search Paginate Set Cookie
 if (empty($_POST['search'])) {
@@ -68,7 +68,7 @@ require('../layout/header.php');
                                 $categories = getAll("SELECT * FROM categories ORDER BY id DESC LIMIT $offset,$numOfrecord ");
                             } else {
                                 $searchKey = empty($_POST['search']) ? $_COOKIE['search'] : $_POST['search'];
-                                $rawCategories = getAll("SELECT * FROM categories ORDER BY id DESC");
+                                $rawCategories = getAll("SELECT * FROM categories WHERE name LIKE '%$searchKey%' ORDER BY id DESC");
                                 $total_pages = ceil(count($rawCategories) / $numOfrecord);
                                 $categories = getAll("SELECT * FROM categories  WHERE name LIKE '%$searchKey%' ORDER BY id DESC LIMIT $offset,$numOfrecord ");
                             }

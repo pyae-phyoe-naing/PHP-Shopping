@@ -2,7 +2,7 @@
 require('../../init.php');
 $title = 'Order Detail';
 if (!isset($_SESSION['user'])) {
-    back('errorModal', 'Account Login ဝင်ရန်လိုအပ်ပါသည်။', 'login.php');
+    back('errorModal', 'Account Login ဝင်ရန်လိုအပ်ပါသည်။', '../login.php');
 }
 ## For search Paginate Set Cookie
 if (empty($_POST['search'])) {

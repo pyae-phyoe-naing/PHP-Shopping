@@ -2,7 +2,7 @@
 require('../../init.php');
 $title = 'Product';
 if (!isset($_SESSION['user'])) {
-    back('errorModal', 'Account Login ဝင်ရန်လိုအပ်ပါသည်။', 'login.php');
+    back('errorModal', 'Account Login ဝင်ရန်လိုအပ်ပါသည်။', '../login.php');
 }
 ## For search Paginate Set Cookie
 if (empty($_POST['search'])) {
@@ -72,7 +72,7 @@ require('../layout/header.php');
                                 $result = getAll("SELECT * FROM products ORDER BY id DESC LIMIT $offset,$numOfrecord ");
                             } else {
                                 $searchKey = empty($_POST['search']) ? $_COOKIE['search'] : $_POST['search'];
-                                $rawResult = getAll("SELECT * FROM products ORDER BY id DESC");
+                                $rawResult = getAll("SELECT * FROM products WHERE name LIKE '%$searchKey%' or description LIKE '%$searchKey%' ORDER BY id DESC");
                                 $total_pages = ceil(count($rawResult) / $numOfrecord);
                                 $result = getAll("SELECT * FROM products  WHERE name LIKE '%$searchKey%' or description LIKE '%$searchKey%' ORDER BY id DESC LIMIT $offset,$numOfrecord ");
                             }

@@ -2,7 +2,7 @@
 require('../../init.php');
 $title = 'Edit User';
 if (!isset($_SESSION['user'])) {
-    back('errorModal', 'Account Login ဝင်ရန်လိုအပ်ပါသည်။', 'login.php');
+    back('errorModal', 'Account Login ဝင်ရန်လိုအပ်ပါသည်။', '../login.php');
 }
 ##########################################
 ## update user
