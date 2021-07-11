@@ -21,9 +21,25 @@ $numOfrecord = 9;
 $offset = ($pageno - 1) * $numOfrecord;
 ## get product
 if (empty($_POST["search"]) && empty($_COOKIE['search'])) {
-	$rawResult = getAll("SELECT * FROM products ORDER BY id DESC");
-	$total_pages = ceil(count($rawResult) / $numOfrecord);
-	$result = getAll("SELECT * FROM products ORDER BY id DESC LIMIT $offset,$numOfrecord ");
+	## check category by product or all product
+	if (!empty($_GET['id'])) {
+		$id = $_GET['id'];
+		## check exit category id
+		$cur_cat = getSingle("select * from categories where id=?",[$id]);
+		if($cur_cat){
+			$rawResult = getAll("SELECT * FROM products WHERE category_id=? ORDER BY id DESC",[$id]);
+			$total_pages = ceil(count($rawResult) / $numOfrecord);
+			$result = getAll("SELECT * FROM products WHERE category_id=? ORDER BY id DESC LIMIT $offset,$numOfrecord ",[$id]);
+		}else{
+			back('errorModal','လက်မဆော့ပါနဲ့','index.php');
+			//echo "<script>window.location.href='index.php'</script>";
+		}
+		
+	} else {
+		$rawResult = getAll("SELECT * FROM products ORDER BY id DESC");
+		$total_pages = ceil(count($rawResult) / $numOfrecord);
+		$result = getAll("SELECT * FROM products ORDER BY id DESC LIMIT $offset,$numOfrecord ");
+	}
 } else {
 	$searchKey = empty($_POST['search']) ? $_COOKIE['search'] : $_POST['search'];
 	$rawResult = getAll("SELECT * FROM products ORDER BY id DESC");
@@ -49,7 +65,7 @@ require 'layout/header.php';
 					foreach ($cats as $cat) {
 					?>
 						<li class="main-nav-list">
-							<a href="><?php echo $cat['slug']; ?>">
+							<a href="index.php?id=<?php echo $cat['id']; ?>">
 								<span class="lnr lnr-arrow-right"></span><?php echo escape($cat['name']); ?>
 								<span class="badge  float-right mt-3 text-white" style="background-color: #ffb300;;"><?php echo $cat['product_count']; ?></span>
 							</a>
