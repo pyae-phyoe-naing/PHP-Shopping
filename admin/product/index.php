@@ -88,7 +88,7 @@ require('../layout/header.php');
                                         <td><?php echo escape($value['name']); ?></td>
                                         <td><?php echo escape($cat->name); ?></td>
                                         <td>
-                                            <img src="<?php echo BASE_URL.'admin/assets/images/products/'.$value['image']; ?>" width="50" height="50">
+                                            <img src="<?php echo BASE_URL . 'admin/assets/images/products/' . $value['image']; ?>" width="50" height="50">
                                         </td>
                                         <td><?php echo escape(substr($value['description'], 0, 30)); ?></td>
                                         <td><?php echo escape($value['quantity']); ?></td>
