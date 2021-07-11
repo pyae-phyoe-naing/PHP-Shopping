@@ -33,7 +33,7 @@ if ($_POST) {
     if (empty($description)) {
         $errors['description'] = 'Product description ဖြည့်ရန်လိုအပ်ပါသည်။';
     }
-    if (isset($_FILES['image']['name'])) {
+    if (!empty($_FILES['image']['name'])) {
         $imagetype = $_FILES['image']['name'];
         $supported_image = array('jfif', 'jpg', 'jpeg','png');
         $ext = strtolower(pathinfo($imagetype, PATHINFO_EXTENSION));

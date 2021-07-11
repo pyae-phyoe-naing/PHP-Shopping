@@ -17,7 +17,7 @@ if (!empty($_GET["pageno"])) {
 } else {
 	$pageno = 1;
 }
-$numOfrecord = 9;
+$numOfrecord = 6;
 $offset = ($pageno - 1) * $numOfrecord;
 ## get product
 if (empty($_POST["search"]) && empty($_COOKIE['search'])) {
@@ -103,7 +103,7 @@ require 'layout/header.php';
 								<div class="single-product card border-0 shadow">
 									<div class="card-body">
 										<p class="text-center">
-											<img height="120" class="w-50" src="<?php echo BASE_URL . 'admin/assets/images/products/' . $value['image']; ?>" alt="">
+											<img height="115" class="w-50" src="<?php echo BASE_URL . 'admin/assets/images/products/' . $value['image']; ?>" alt="">
 										</p>
 										<div class="product-details">
 											<h6><?php echo $value['name'] ?></h6>
@@ -116,10 +116,11 @@ require 'layout/header.php';
 													<span class="ti-bag"></span>
 													<p class="hover-text">add to bag</p>
 												</a>
-												<a href="" class="social-info">
+												<a href="<?php echo BASE_URL;?>product_detail.php?slug=<?php echo $value['slug']; ?>" class="social-info">
 													<span class="lnr lnr-move"></span>
 													<p class="hover-text">view more</p>
 												</a>
+												<span class="float-right badge badge-info px-2 py-1" style="color:#f5f5f5"><?php echo $cat->name; ?></span>
 											</div>
 										</div>
 									</div>
