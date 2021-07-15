@@ -50,17 +50,13 @@ require "layout/header.php";
 
                                     </td>
                                     <td>
-                                        <h5 id="original_price<?php echo $product->id; ?>" price="<?php echo $product->price; ?>"><?php echo $product->price; ?> MMK</h5>
+                                        <h5><?php echo $product->price; ?> MMK</h5>
                                     </td>
                                     <td>
-                                        <div class="product_count">
-                                            <input readonly type="text" name="qty" id="sst<?php echo $product->id; ?>" maxlength="12" value="<?php echo $val; ?>" title="Quantity:" class="input-text qty">
-                                            <button product_id="<?php echo $product->id; ?>" product_qty="<?php echo $product->quantity; ?>" class="increase items-count" type="button"><i class="lnr lnr-chevron-up"></i></button>
-                                            <button product_id="<?php echo $product->id; ?>" class="reduced items-count" type="button"><i class="lnr lnr-chevron-down"></i></button>
-                                        </div>
+                                        <h5><?php echo $val; ?></h5>
                                     </td>
                                     <td>
-                                        <h5 id='total<?php echo $product->id; ?>'>
+                                        <h5>
                                             <?php echo $product->price * $val; ?> MMK
                                         </h5>
                                     </td>
@@ -72,7 +68,7 @@ require "layout/header.php";
                                 </tr>
                         <?php }
                         } ?>
-                        <tr>
+                        <tr>                   
                             <td></td>
                             <td></td>
                             <td></td>
@@ -92,7 +88,7 @@ require "layout/header.php";
                                 <div class="checkout_btn_inner d-flex align-items-center">
                                     <a class="primary-btn" href="<?php echo BASE_URL ?>clearall.php">Clear All</a>
                                     <a class="gray_btn" href="<?php echo BASE_URL ?>index.php">Continue Shopping</a>
-                                    <a class="primary-btn" href="<?php echo BASE_URL ?>checkout.php"> Checkout</a>
+                                    <a href="<?php echo BASE_URL ?>ordersubmit.php" class="primary-btn text-white">Order Submit</a>
 
                                 </div>
                             </td>
@@ -107,58 +103,7 @@ require "layout/header.php";
 
 
 <?php require "layout/footer.php"; ?>
-<script>
-    let main_total = document.getElementById('main_total');
 
-    let increases = document.querySelectorAll(".increase");
-    let reduces = document.querySelectorAll(".reduced");
-    let count = document.querySelector('.count');
-    increases.forEach(increase => {
-        increase.addEventListener('click', function() {
-            let product_qty = increase.getAttribute('product_qty');
-            let product_id = increase.getAttribute('product_id');
-            let main_total_price = main_total.innerHTML.replace('MMK', '').trim();
-            let original_price = document.getElementById('original_price' + product_id).getAttribute('price');
-
-            let total = document.getElementById('total' + product_id);
-            let input = document.getElementById('sst' + product_id);
-
-            let qty = Number(input.value);
-            qty += 1;
-            if (qty <= product_qty) {
-                    count.innerHTML = Number(count.innerHTML) + 1;
-                    input.value = qty;
-                let total_price = original_price * qty
-                total.innerText = total_price + ' MMK';
-                main_total.innerHTML = Number(main_total_price) + Number(original_price) + ' MMK';
-            } else {
-                input.value = product_qty;
-            }
-        })
-    })
-    reduces.forEach(reduced => {
-        reduced.addEventListener('click', function() {
-            let product_id = reduced.getAttribute('product_id');
-            let input = document.getElementById('sst' + product_id);
-            let total = document.getElementById('total' + product_id);
-            let main_total_price = main_total.innerHTML.replace('MMK', '').trim();
-            let original_price = document.getElementById('original_price' + product_id).getAttribute('price');
-
-
-            let qty = Number(input.value);
-            qty -= 1;
-            if (qty < 1) {
-                qty = 1;
-            } else {
-                count.innerHTML = Number(count.innerHTML) - 1;
-                input.value = qty;
-                let total_price = original_price * qty
-                total.innerText = total_price + ' MMK';
-                main_total.innerHTML = Number(main_total_price) - Number(original_price) + ' MMK';
-            }
-        })
-    })
-</script>
 </body>
 
 </html>
