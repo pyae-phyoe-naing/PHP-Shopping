@@ -5,7 +5,9 @@ if ($_POST) {
     $qty = $_POST['qty'];
     $product_id = $_POST['id'];
     $slug = $_POST['slug'];
-
+    if($qty < 1){
+        back('errorModal', 'အနည်းဆုံး တစ်ခုတော့ထည့်လေကွာ !', 'product_detail.php?slug=' . $slug);
+    }
     $product = getSingle("select * from products where slug='$slug'");
 
     if (isset($_SESSION['cart']['id-' . $product_id])) {

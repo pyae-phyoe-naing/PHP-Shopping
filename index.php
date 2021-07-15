@@ -25,16 +25,15 @@ if (empty($_POST["search"]) && empty($_COOKIE['search'])) {
 	if (!empty($_GET['id'])) {
 		$id = $_GET['id'];
 		## check exit category id
-		$cur_cat = getSingle("select * from categories where id=?",[$id]);
-		if($cur_cat){
-			$rawResult = getAll("SELECT * FROM products WHERE category_id=? ORDER BY id DESC",[$id]);
+		$cur_cat = getSingle("select * from categories where id=?", [$id]);
+		if ($cur_cat) {
+			$rawResult = getAll("SELECT * FROM products WHERE category_id=? ORDER BY id DESC", [$id]);
 			$total_pages = ceil(count($rawResult) / $numOfrecord);
-			$result = getAll("SELECT * FROM products WHERE category_id=? ORDER BY id DESC LIMIT $offset,$numOfrecord ",[$id]);
-		}else{
-			back('errorModal','လက်မဆော့ပါနဲ့','index.php');
+			$result = getAll("SELECT * FROM products WHERE category_id=? ORDER BY id DESC LIMIT $offset,$numOfrecord ", [$id]);
+		} else {
+			back('errorModal', 'လက်မဆော့ပါနဲ့', 'index.php');
 			//echo "<script>window.location.href='index.php'</script>";
 		}
-		
 	} else {
 		$rawResult = getAll("SELECT * FROM products ORDER BY id DESC");
 		$total_pages = ceil(count($rawResult) / $numOfrecord);
@@ -116,7 +115,7 @@ require 'layout/header.php';
 													<span class="ti-bag"></span>
 													<p class="hover-text">add to bag</p>
 												</a>
-												<a href="<?php echo BASE_URL;?>product_detail.php?slug=<?php echo $value['slug']; ?>" class="social-info">
+												<a href="<?php echo BASE_URL; ?>product_detail.php?slug=<?php echo $value['slug']; ?>" class="social-info">
 													<span class="lnr lnr-move"></span>
 													<p class="hover-text">view more</p>
 												</a>

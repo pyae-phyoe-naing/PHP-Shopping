@@ -40,7 +40,7 @@ require "layout/header.php";
             <div class="product_count">
               <label for="qty">Quantity:</label>
               <?php $qty = 1; ?>
-              <input type="text" name="qty" id="sst" maxlength="12" value="<?php echo $qty; ?>" title="Quantity:" class="input-text qty">
+              <input type="number" name="qty" id="sst" maxlength="12" value="<?php echo $qty; ?>" title="Quantity:" class="input-text qty">
               <button class="increase items-count" onclick="increase()" type="button"><i class="lnr lnr-chevron-up"></i></button>
               <button class="reduced items-count" onclick="decrease()" type="button"><i class="lnr lnr-chevron-down"></i></button>
             </div>
@@ -58,6 +58,7 @@ require "layout/header.php";
 
 
 <?php require "layout/footer.php"; ?>
+
 <script>
   let product_qty = Number(" <?php echo $result->quantity ?>");
   let input = document.getElementById('sst');
@@ -81,3 +82,6 @@ require "layout/header.php";
     }
   }
 </script>
+</body>
+
+</html>
