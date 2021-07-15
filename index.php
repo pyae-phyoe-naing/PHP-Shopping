@@ -27,23 +27,23 @@ if (empty($_POST["search"]) && empty($_COOKIE['search'])) {
 		## check exit category id
 		$cur_cat = getSingle("select * from categories where id=?", [$id]);
 		if ($cur_cat) {
-			$rawResult = getAll("SELECT * FROM products WHERE category_id=? ORDER BY id DESC", [$id]);
+			$rawResult = getAll("SELECT * FROM products WHERE category_id=? AND quantity > 0 ORDER BY id DESC", [$id]);
 			$total_pages = ceil(count($rawResult) / $numOfrecord);
-			$result = getAll("SELECT * FROM products WHERE category_id=? ORDER BY id DESC LIMIT $offset,$numOfrecord ", [$id]);
+			$result = getAll("SELECT * FROM products WHERE category_id=? AND quantity > 0 ORDER BY id DESC LIMIT $offset,$numOfrecord ", [$id]);
 		} else {
 			back('errorModal', 'လက်မဆော့ပါနဲ့', 'index.php');
 			//echo "<script>window.location.href='index.php'</script>";
 		}
 	} else {
-		$rawResult = getAll("SELECT * FROM products ORDER BY id DESC");
+		$rawResult = getAll("SELECT * FROM products WHERE quantity > 0 ORDER BY id DESC");
 		$total_pages = ceil(count($rawResult) / $numOfrecord);
-		$result = getAll("SELECT * FROM products  ORDER BY id DESC LIMIT $offset,$numOfrecord ");
+		$result = getAll("SELECT * FROM products WHERE quantity > 0  ORDER BY id DESC LIMIT $offset,$numOfrecord ");
 	}
 } else {
 	$searchKey = empty($_POST['search']) ? $_COOKIE['search'] : $_POST['search'];
-	$rawResult = getAll("SELECT * FROM products WHERE name LIKE '%$searchKey%' or description LIKE '%$searchKey%' ORDER BY id DESC");
+	$rawResult = getAll("SELECT * FROM products WHERE  quantity > 0 AND name LIKE '%$searchKey%' or description LIKE '%$searchKey%' ORDER BY id DESC");
 	$total_pages = ceil(count($rawResult) / $numOfrecord);
-	$result = getAll("SELECT * FROM products  WHERE name LIKE '%$searchKey%' or description LIKE '%$searchKey%' ORDER BY id DESC LIMIT $offset,$numOfrecord ");
+	$result = getAll("SELECT * FROM products  WHERE   quantity > 0 AND name LIKE '%$searchKey%' or description LIKE '%$searchKey%' ORDER BY id DESC LIMIT $offset,$numOfrecord ");
 }
 ## 1 qty add cart home page
 if (isset($_GET['slug']) and !empty($_GET['slug'])) {
@@ -64,7 +64,11 @@ if (isset($_GET['slug']) and !empty($_GET['slug'])) {
 			$_SESSION['cart']['id-' . $product_id] += 1;
 		}
 	} else {
-		$_SESSION['cart']['id-' . $product_id] = 1;
+		if ($product_qty >= 1) {
+			$_SESSION['cart']['id-' . $product_id] = 1;
+		}else{
+			back('errorModal', 'Product အလုံအလောက်မရှိတော့ပါ !', 'index.php');
+		}
 	}
 	back('success', 'Add to cart ', 'index.php');
 }
@@ -82,8 +86,8 @@ require 'layout/header.php';
 					<!-- loop category -->
 					<?php
 					$cats = getAll(" SELECT *,
-									(SELECT COUNT(id) from products WHERE products.category_id=categories.id) as product_count
-									FROM categories");
+									(SELECT COUNT(id) from products WHERE products.category_id=categories.id AND quantity > 0) as product_count
+									FROM categories ");
 					foreach ($cats as $cat) {
 					?>
 						<li class="main-nav-list">
