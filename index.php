@@ -45,6 +45,29 @@ if (empty($_POST["search"]) && empty($_COOKIE['search'])) {
 	$total_pages = ceil(count($rawResult) / $numOfrecord);
 	$result = getAll("SELECT * FROM products  WHERE name LIKE '%$searchKey%' or description LIKE '%$searchKey%' ORDER BY id DESC LIMIT $offset,$numOfrecord ");
 }
+## 1 qty add cart home page
+if (isset($_GET['slug']) and !empty($_GET['slug'])) {
+	$slug = $_GET['slug'];
+	$product = getSingle("select * from products where slug='$slug'");
+	$product_qty = $product->quantity;
+	$product_id = $product->id;
+	if (isset($_SESSION['cart']['id-' . $product_id])) {
+		$old_qty = $_SESSION['cart']['id-' . $product_id];
+		$add_qty =  $old_qty + 1;
+		// check add qty amount > product qty
+		if ($add_qty > $product_qty) {
+			## if > set session old qty value
+			$_SESSION['cart']['id-' . $product_id] = $old_qty;
+			back('errorModal', 'Product အလုံအလောက်မရှိတော့ပါ !', 'index.php');
+		} else {
+			## if not > set session old + new qty
+			$_SESSION['cart']['id-' . $product_id] += 1;
+		}
+	} else {
+		$_SESSION['cart']['id-' . $product_id] = 1;
+	}
+	back('success', 'Add to cart ', 'index.php');
+}
 require 'layout/header.php';
 
 ?>
@@ -111,7 +134,7 @@ require 'layout/header.php';
 											</div>
 											<div class="prd-bottom">
 
-												<a href="" class="social-info">
+												<a href="<?php echo BASE_URL . 'index.php?slug=' . $value['slug']; ?>" class="social-info">
 													<span class="ti-bag"></span>
 													<p class="hover-text">add to bag</p>
 												</a>

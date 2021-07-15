@@ -52,7 +52,8 @@
 							<?php
 							$count = 0;
 							if (isset($_SESSION['cart'])) {
-								//pretty($_SESSION['cart']);
+							//	pretty($_SESSION['cart']);
+							//	session_destroy();
 								foreach ($_SESSION['cart'] as $c) {
 									$count += $c;
 								}

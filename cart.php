@@ -6,7 +6,7 @@ if (!isset($_SESSION['cart']) || count($_SESSION['cart']) < 1) {
 }
 
 // clear single cart
-if(isset($_GET['key']) and !empty($_GET['key'])){
+if (isset($_GET['key']) and !empty($_GET['key'])) {
     $key = $_GET['key'];
     unset($_SESSION['cart'][$key]);
     redirect('cart.php');
@@ -65,7 +65,7 @@ require "layout/header.php";
                                         </h5>
                                     </td>
                                     <td>
-                                        <a href="<?php echo BASE_URL.'cart.php?key='.$key;?>" class="btn btn-sm shadow" style="border-radius: 30%;color:white;background:#EECC5C;">
+                                        <a href="<?php echo BASE_URL . 'cart.php?key=' . $key; ?>" class="btn btn-sm shadow" style="border-radius: 30%;color:white;background:#EECC5C;">
                                             X
                                         </a>
                                     </td>
@@ -112,6 +112,7 @@ require "layout/header.php";
 
     let increases = document.querySelectorAll(".increase");
     let reduces = document.querySelectorAll(".reduced");
+    let count = document.querySelector('.count');
     increases.forEach(increase => {
         increase.addEventListener('click', function() {
             let product_qty = increase.getAttribute('product_qty');
@@ -125,7 +126,8 @@ require "layout/header.php";
             let qty = Number(input.value);
             qty += 1;
             if (qty <= product_qty) {
-                input.value = qty;
+                    count.innerHTML = Number(count.innerHTML) + 1;
+                    input.value = qty;
                 let total_price = original_price * qty
                 total.innerText = total_price + ' MMK';
                 main_total.innerHTML = Number(main_total_price) + Number(original_price) + ' MMK';
@@ -148,6 +150,7 @@ require "layout/header.php";
             if (qty < 1) {
                 qty = 1;
             } else {
+                count.innerHTML = Number(count.innerHTML) - 1;
                 input.value = qty;
                 let total_price = original_price * qty
                 total.innerText = total_price + ' MMK';
