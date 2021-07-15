@@ -16,9 +16,11 @@ require "layout/header.php";
                     <thead>
                         <tr>
                             <th scope="col">Product</th>
+                            <th scope="col">Image</th>
                             <th scope="col">Price</th>
                             <th scope="col">Quantity</th>
                             <th scope="col">Total</th>
+                            <th scope="col">Action</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -29,21 +31,17 @@ require "layout/header.php";
                             foreach ($_SESSION['cart'] as $key => $val) {
                                 $product_id = str_replace('id-', '', $key);
                                 $product = getSingle("select * from products where id=$product_id");
-                                //   echo $val."<hr>";
+                                $total += $product->price * $val;
                         ?>
                                 <tr>
                                     <td>
-                                        <div class="media">
-                                            <div class="d-flex">
-                                                <!-- <img src="img/cart.jpg" alt=""> -->
-                                            </div>
-                                            <div class="media-body">
-                                                <p><?php echo $product->name; ?></p>
-                                            </div>
-                                        </div>
+                                        <?php echo $product->name; ?>
+                                    <td style="padding-top: 0px;">
+                                        <img height='70' class="mt-5" src="<?php echo BASE_URL . 'admin/assets/images/products/' . $product->image; ?>" alt="">
+
                                     </td>
                                     <td>
-                                        <h5><?php echo $product->price; ?> MMK</h5>
+                                        <h5 id="original_price<?php echo $product->id; ?>" price="<?php echo $product->price; ?>"><?php echo $product->price; ?> MMK</h5>
                                     </td>
                                     <td>
                                         <div class="product_count">
@@ -53,24 +51,26 @@ require "layout/header.php";
                                         </div>
                                     </td>
                                     <td>
-                                        <h5 id='total<?php echo $product->id; ?>' price="<?php echo $product->price; ?>">
+                                        <h5 id='total<?php echo $product->id; ?>'>
                                             <?php echo $product->price * $val; ?> MMK
                                         </h5>
+                                    </td>
+                                    <td>
+                                        <button class="btn btn-sm shadow" style="border-radius: 30%;color:white;background:#982EFA;">X</button>
                                     </td>
                                 </tr>
                         <?php }
                         } ?>
+                        <tr>
+                            <td colspan="4" class="text-right font-weight-bold">Total Price </td>
+                            <td id="main_total" colspan="2">
+                                <?php echo $total; ?> MMK
+                            </td>
+                        </tr>
                         <tr class="out_button_area">
-                            <td>
+                            <td colspan="4"></td>
 
-                            </td>
-                            <td>
-
-                            </td>
-                            <td>
-
-                            </td>
-                            <td>
+                            <td colspan="2">
                                 <div class="checkout_btn_inner d-flex align-items-center">
                                     <a class="primary-btn" href="<?php echo BASE_URL ?>clearall.php">Clear All</a>
                                     <a class="gray_btn" href="<?php echo BASE_URL ?>index.php">Continue Shopping</a>
@@ -90,22 +90,27 @@ require "layout/header.php";
 
 <?php require "layout/footer.php"; ?>
 <script>
+    let main_total = document.getElementById('main_total');
+
     let increases = document.querySelectorAll(".increase");
     let reduces = document.querySelectorAll(".reduced");
     increases.forEach(increase => {
         increase.addEventListener('click', function() {
             let product_qty = increase.getAttribute('product_qty');
             let product_id = increase.getAttribute('product_id');
+            let main_total_price = main_total.innerHTML.replace('MMK', '').trim();
+            let original_price = document.getElementById('original_price' + product_id).getAttribute('price');
+
             let total = document.getElementById('total' + product_id);
-            let price = total.getAttribute('price');
             let input = document.getElementById('sst' + product_id);
 
             let qty = Number(input.value);
             qty += 1;
             if (qty <= product_qty) {
                 input.value = qty;
-                let total_price = price * qty
+                let total_price = original_price * qty
                 total.innerText = total_price + ' MMK';
+                main_total.innerHTML = Number(main_total_price) + Number(original_price) + ' MMK';
             } else {
                 input.value = product_qty;
             }
@@ -116,7 +121,9 @@ require "layout/header.php";
             let product_id = reduced.getAttribute('product_id');
             let input = document.getElementById('sst' + product_id);
             let total = document.getElementById('total' + product_id);
-            let price = total.getAttribute('price');
+            let main_total_price = main_total.innerHTML.replace('MMK', '').trim();
+            let original_price = document.getElementById('original_price' + product_id).getAttribute('price');
+
 
             let qty = Number(input.value);
             qty -= 1;
@@ -124,8 +131,9 @@ require "layout/header.php";
                 qty = 1;
             } else {
                 input.value = qty;
-                let total_price = price * qty
+                let total_price = original_price * qty
                 total.innerText = total_price + ' MMK';
+                main_total.innerHTML = Number(main_total_price) - Number(original_price) + ' MMK';
             }
         })
     })
