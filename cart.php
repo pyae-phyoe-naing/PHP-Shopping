@@ -1,8 +1,17 @@
 <?php
 require "init.php";
-if (!isset($_SESSION['cart'])) {
+
+if (!isset($_SESSION['cart']) || count($_SESSION['cart']) < 1) {
     back('errorModal', 'ဝယ်ယူမည့် product ကို အရင်ရွေးချယ်ပေးပါ', 'index.php');
 }
+
+// clear single cart
+if(isset($_GET['key']) and !empty($_GET['key'])){
+    $key = $_GET['key'];
+    unset($_SESSION['cart'][$key]);
+    redirect('cart.php');
+}
+
 require "layout/header.php";
 
 ?>
@@ -56,15 +65,24 @@ require "layout/header.php";
                                         </h5>
                                     </td>
                                     <td>
-                                        <button class="btn btn-sm shadow" style="border-radius: 30%;color:white;background:#982EFA;">X</button>
+                                        <a href="<?php echo BASE_URL.'cart.php?key='.$key;?>" class="btn btn-sm shadow" style="border-radius: 30%;color:white;background:#EECC5C;">
+                                            X
+                                        </a>
                                     </td>
                                 </tr>
                         <?php }
                         } ?>
                         <tr>
-                            <td colspan="4" class="text-right font-weight-bold">Total Price </td>
-                            <td id="main_total" colspan="2">
-                                <?php echo $total; ?> MMK
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>
+                                <h5>Total Price</h5>
+                            </td>
+                            <td>
+                                <h5 id="main_total">
+                                    <?php echo $total; ?> MMK
+                                </h5>
                             </td>
                         </tr>
                         <tr class="out_button_area">
