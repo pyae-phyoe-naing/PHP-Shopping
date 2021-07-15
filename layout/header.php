@@ -49,7 +49,26 @@
 					<!-- Collect the nav links, forms, and other content for toggling -->
 					<div class="collapse navbar-collapse offset" id="navbarSupportedContent">
 						<ul class="nav navbar-nav navbar-right">
-							<li class="nav-item"><a href="<?php echo BASE_URL; ?>index.php" class="cart"><span class="ti-bag"></span></a></li>
+							<?php
+							$count = 0;
+							if (isset($_SESSION['cart'])) {
+								//pretty($_SESSION['cart']);
+								foreach ($_SESSION['cart'] as $c) {
+									$count += $c;
+								}
+								//echo $count;
+							}
+							?>
+							<li class="nav-item mr-4" style="position:relative">
+								<a href="<?php echo BASE_URL; ?>cart.php" class="cart">
+									<span style="position: absolute;top:30;">
+										<i class="feather-shopping-bag"></i>
+									</span>
+								</a>
+								<p class="ml-3 mt-3 count d-inline">
+									<?php echo $count; ?>
+								</p>
+							</li>
 							<li class="nav-item">
 								<button class="search"><span class="lnr lnr-magnifier" id="search"></span></button>
 							</li>

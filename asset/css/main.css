@@ -5791,3 +5791,14 @@ label {
     color: #ffba00; }
 
 /*# sourceMappingURL=main.css.map */
+.count{
+  background-color: red;
+  width: 20px;
+  height: 20px;
+  line-height: 20px;
+  color: white;
+  text-align: center;
+  border-radius: 50%;
+  position: absolute !important;
+  font-size: 11px;
+}
