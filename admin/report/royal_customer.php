@@ -2,10 +2,15 @@
 require('../../init.php');
 $title = 'Royal Customer';
 if (!isset($_SESSION['user'])) {
-back('errorModal', 'Account Login ဝင်ရန်လိုအပ်ပါသည်။','../login.php');
+    back('errorModal', 'Account Login ဝင်ရန်လိုအပ်ပါသည်။', '../login.php');
 }
 
-
+$now = date('Y-m-d');
+$from = date('Y-m-d', strtotime($now . ' -1 months'));
+$data = getAll("SELECT * FROM `sale_orders` WHERE total_price >= 200000
+                AND cast(order_date as date)<='$now' and cast(order_date as date)>'$from'
+                ORDER BY total_price DESC 
+               ");
 ## End
 require('../layout/header.php');
 ?>
@@ -19,7 +24,7 @@ require('../layout/header.php');
                     <i class="feather-user-check icon-gradient bg-mean-fruit">
                     </i>
                 </div>
-                <div> Royal Customer
+                <div> Royal Customer In One Month
                 </div>
             </div>
 
@@ -29,9 +34,42 @@ require('../layout/header.php');
     <div class="row">
         <div class="col-12">
             <div class="card">
-                <div class="card-header"> List</div>
                 <div class="card-body">
-                   
+                    <table class="table" id="royal_customer" class="display" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th>No</th>
+                                <th>Customer</th>
+                                <th>Total Amount</th>
+                                <th>Phone</th>
+                                <th>Address</th>
+                                <th>Order Date</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php
+                            $i = 1;
+                            foreach ($data as $od) {
+                                $user = getSingle("SELECT * FROM users WHERE id=?", [$od['user_id']]);
+                                 pretty($user->name);
+                            ?>
+                                <tr>
+                                    <td><?php echo $i++; ?></td>
+                                    <td><?php echo $user->name ?></td>
+                                    <td><?php echo $od['total_price']; ?> MMK</td>
+                                    <td><?php echo $user->phone ?></td>
+                                    <td><?php echo $user->address ?></td>
+                                    <td>
+                                        <span class="mr-3">
+                                            <i class="pe-7s-date mr-1"></i>
+                                            <?php echo date_format(date_create($od['order_date']), "d F Y "); ?>
+                                        </span>
+
+                                    </td>
+                                </tr>
+                            <?php } ?>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
@@ -41,29 +79,10 @@ require('../layout/header.php');
 
 <?php require('../layout/footer.php') ?>
 <script>
-    function deleteCat(slug) {
-
-        Swal.fire({
-            title: 'Are you sure delete?',
-            text: "You won't be able to revert this!",
-            icon: 'warning',
-            reverseButtons: true,
-            confirmButtonText: 'Confirm',
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            showCancelButton: true,
-            preConfirm: () => {
-                $.get(`delete.php?slug=${slug}`)
-            },
-        }).then(res => {
-            if(res.isConfirmed){
-                location.reload();
-            }
-        })
-
-    }
+    $(document).ready(function() {
+        $('#royal_customer').DataTable();
+    });
 </script>
-
 </body>
 
 </html>

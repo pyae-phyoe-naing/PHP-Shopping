@@ -38,7 +38,6 @@ require('../layout/header.php');
     <div class="row">
         <div class="col-12">
             <div class="card">
-                <div class="card-header">Weekly Report List</div>
                 <div class="card-body">
                     <table class="table" id="weekly_report" class="display" style="width:100%">
                         <thead>

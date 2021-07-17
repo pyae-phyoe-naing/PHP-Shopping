@@ -27,7 +27,6 @@ require('../layout/header.php');
     </div>
     <?php
     $now = date('Y-m-d');
-    //  $from = date('Y-m-d', strtotime('-7 days', strtotime($now))); OR
     $from = date('Y-m-d', strtotime($now . ' -1 months'));
     $data = getAll("select *,(select name from users where sale_orders.user_id=users.id) as user
                    from sale_orders where cast(order_date as date)<='$now' and cast(order_date as date)>'$from' ");
@@ -38,9 +37,8 @@ require('../layout/header.php');
     <div class="row">
         <div class="col-12">
             <div class="card">
-                <div class="card-header">Monthly Report List</div>
                 <div class="card-body">
-                    <table class="table" id="weekly_report" class="display" style="width:100%">
+                    <table class="table" id="monthly_report" class="display" style="width:100%">
                         <thead>
                             <tr>
                                 <th>No</th>
@@ -79,7 +77,7 @@ require('../layout/header.php');
 <?php require('../layout/footer.php') ?>
 <script>
     $(document).ready(function() {
-        $('#weekly_report').DataTable();
+        $('#monthly_report').DataTable();
     });
 </script>
 </body>
