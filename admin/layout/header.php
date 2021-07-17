@@ -21,6 +21,8 @@ if (isset($_SESSION['user']) && $_SESSION['user']->role != 1) {
     <meta name="description" content="This is an example dashboard created using build-in elements and components.">
     <meta name="msapplication-tap-highlight" content="no">
     <link href="<?php echo BASE_URL ?>admin/main.css" rel="stylesheet">
+	<link rel="stylesheet" href="<?php echo BASE_URL ?>asset/feather-icons/feather.css">
+
 </head>
 
 <body>

@@ -2,7 +2,7 @@
 require "init.php";
 
 if (!isset($_SESSION['cart']) || count($_SESSION['cart']) < 1) {
-    back('errorModal', 'ဝယ်ယူမည့် product ကို အရင်ရွေးချယ်ပေးပါ', 'index.php');
+    back('error', 'ဝယ်ယူမည့် product ကို အရင်ရွေးချယ်ပေးပါ', 'index.php');
 }
 
 // clear single cart
