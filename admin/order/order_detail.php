@@ -13,6 +13,7 @@ if (empty($_POST['search'])) {
 } else {
     setcookie('search', $_POST['search'], time() + (8600 * 30), "/");
 }
+$id = $_GET['id'];
 
 ## End
 require('../layout/header.php');
@@ -62,7 +63,7 @@ require('../layout/header.php');
                             } else {
                                 $pageno = 1;
                             }
-                            $numOfrecord = 5;
+                            $numOfrecord = 2;
                             $offset = ($pageno - 1) * $numOfrecord;
 
                             if (empty($_POST["search"]) && empty($_COOKIE['search'])) {
@@ -110,22 +111,22 @@ require('../layout/header.php');
                         <ul class="pagination mt-3">
                             <!-- First -->
                             <li class="page-item ">
-                                <a class="page-link" href="?pageno=1">First</a>
+                                <a class="page-link" href="?id=<?php echo $id ?>&pageno=1">First</a>
                             </li>
                             <li class="page-item <?php echo $pageno <= 1 ? 'disabled' : '' ?>">
-                                <a class="page-link" href="<?php echo $pageno <= 1 ? '#' : '?pageno=' . ($pageno - 1); ?>">
+                                <a class="page-link" href="<?php echo $pageno <= 1 ? '#' : '?pageno=' . ($pageno - 1).'&id='. $id; ?>">
                                     Previous
                                 </a>
                             </li>
                             <li class="page-item"><a class="page-link" href="#"><?php echo $pageno; ?></a></li>
                             <li class="page-item <?php echo $pageno >= $total_pages ? 'disabled' : ''; ?>">
-                                <a class="page-link" href="<?php echo $pageno >= $total_pages ? '#' : '?pageno=' . ($pageno + 1);  ?>">
+                                <a class="page-link" href="<?php echo $pageno >= $total_pages ? '#' : '?pageno=' . ($pageno + 1).'&id='. $id;  ?>">
                                     Next
                                 </a>
                             </li>
                             <!-- last -->
                             <li class="page-item">
-                                <a class="page-link" href="?pageno=<?php echo $total_pages; ?>">Last</a>
+                                <a class="page-link" href="?id=<?php echo $id ?>&pageno=<?php echo $total_pages; ?>">Last</a>
                             </li>
                         </ul>
                     </nav>
