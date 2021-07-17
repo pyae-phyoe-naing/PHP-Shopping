@@ -4,15 +4,6 @@ $title = 'Best Seller Item';
 if (!isset($_SESSION['user'])) {
 back('errorModal', 'Account Login ဝင်ရန်လိုအပ်ပါသည်။','../login.php');
 }
-## For search Paginate Set Cookie
-if (empty($_POST['search'])) {
-    if (empty($_GET['pageno'])) {
-        unset($_COOKIE['search']);
-        setcookie('search', null, -1, '/');
-    }
-} else {
-    setcookie('search', $_POST['search'], time() + (8600 * 30), "/");
-}
 
 ## End
 require('../layout/header.php');

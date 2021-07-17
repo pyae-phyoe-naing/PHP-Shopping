@@ -22,7 +22,7 @@ if (isset($_SESSION['user']) && $_SESSION['user']->role != 1) {
     <meta name="msapplication-tap-highlight" content="no">
     <link href="<?php echo BASE_URL ?>admin/main.css" rel="stylesheet">
 	<link rel="stylesheet" href="<?php echo BASE_URL ?>asset/feather-icons/feather.css">
-
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.25/css/dataTables.bootstrap4.min.css">
 </head>
 
 <body>
