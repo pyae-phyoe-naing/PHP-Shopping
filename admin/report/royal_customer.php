@@ -58,7 +58,7 @@ require('../layout/header.php');
                                     <td><?php echo $user->name ?></td>
                                     <td><?php echo $od['total_price']; ?> MMK</td>
                                     <td><?php echo $user->phone ?></td>
-                                    <td><?php echo $user->address ?></td>
+                                    <td> <?php echo $user->address ?></td>
                                     <td>
                                         <span class="mr-3">
                                             <i class="pe-7s-date mr-1"></i>

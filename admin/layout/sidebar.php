@@ -88,17 +88,18 @@
                     </a>
                 </li>
                 <li>
-                    <a href="<?php echo BASE_URL ?>admin/report/royal_customer.php" class="<?php echo $rpath == 'royal_customer.php' ? 'mm-active' : ''; ?>">
-                        <i class="metismenu-icon feather-user-check"></i>
-                        Royal Customer
-                    </a>
-                </li>
-                <li>
                     <a href="<?php echo BASE_URL ?>admin/report/best_seller_item.php" class="<?php echo $rpath == 'best_seller_item.php' ? 'mm-active' : ''; ?>">
                         <i class="metismenu-icon pe-7s-shopbag"></i>
                        Best Seller Item
                     </a>
                 </li>
+                <li>
+                    <a href="<?php echo BASE_URL ?>admin/report/royal_customer.php" class="<?php echo $rpath == 'royal_customer.php' ? 'mm-active' : ''; ?>">
+                        <i class="metismenu-icon feather-user-check"></i>
+                        Royal Customer
+                    </a>
+                </li>
+               
 
                 <li class="app-sidebar__heading">Account</li>
                 <li>

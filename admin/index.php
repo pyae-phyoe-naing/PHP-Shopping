@@ -4,7 +4,19 @@ $title = 'Dashboard';
 if (!isset($_SESSION['user'])) {
     back('errorModal', 'Account Login ဝင်ရန်လိုအပ်ပါသည်။', 'login.php');
 }
- ## check data
+## chat data
+## category
+$category_name = [];
+$product_count = [];
+$data = getAll("select *,count(category_id) as product_count,
+              (select name from categories where categories.id = products.category_id) as category_name 
+              from products group by category_id order by count(category_id) desc");
+foreach ($data as $val) {
+    array_push($category_name, $val['category_name']);
+    array_push($product_count, $val['product_count']);
+}
+
+## customer and order
 $dateArr = [];
 $customerArr = [];
 $orderArr = [];
@@ -19,11 +31,10 @@ for ($i = 0; $i < 7; $i++) {
     array_push($customerArr, $data[0]['customer']);
     $order = getAll("SELECT COUNT(id) AS order_count FROM sale_orders WHERE cast(order_date AS DATE)='$current'");
     array_push($orderArr, $order[0]['order_count']);
-   
 }
 ## get order count
 $order_count = 0;
-foreach($orderArr as $order){
+foreach ($orderArr as $order) {
     $order_count = $order_count + $order;
 }
 
@@ -54,7 +65,7 @@ require('layout/header.php');
                         <div class="widget-heading"> Orders</div>
                         <div class="widget-subheading">Total orders per week</div>
                     </div>
-                
+
                     <div class="widget-content-right">
                         <div class="widget-numbers text-white"><span><?php echo $order_count ?></span></div>
                     </div>
@@ -99,7 +110,7 @@ require('layout/header.php');
 
     </div>
     <div class="row  align-items-end mt-3">
-        <div class="col-12 col-xl-7">
+        <div class="col-12 col-xl-6">
             <div class="card overflow-hidden shadow mb-4">
                 <div class="">
                     <div class="d-flex justify-content-between align-items-center p-3 ">
@@ -110,33 +121,40 @@ require('layout/header.php');
                             $users = getAll("select * from users where role=0");
                             foreach ($users as $user) {
                             ?>
-                                <img class='ov-img rounded-circle' alt="" style=" margin-left: -25px;"
-                                 width="<?php echo !$user['image'] ? '49' : '' ;?>"  height="<?php echo !$user['image'] ? '49' : '' ;?>"
-                                 src="<?php echo $user['image'] ? BASE_URL.'admin/assets/images/users/'.$user['image'] : 
-                                  "https://ui-avatars.com/api/?background=0D8ABC&color=fff&name=" . $user['name'];  ?>">
+                                <img class='ov-img rounded-circle' alt="" style=" margin-left: -25px;" width="<?php echo !$user['image'] ? '49' : ''; ?>" height="<?php echo !$user['image'] ? '49' : ''; ?>" src="<?php echo $user['image'] ? BASE_URL . 'admin/assets/images/users/' . $user['image'] :
+                                                                                                                                                                                                                        "https://ui-avatars.com/api/?background=0D8ABC&color=fff&name=" . $user['name'];  ?>">
                             <?php } ?>
                         </div>
                     </div>
-                    <canvas id="ov" height="100"></canvas>
+                    <canvas id="ov" height="145"></canvas>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-md-6 col-xl-6">
+            <div class="card mb-4 shadow">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center p-3 ">
+                        <h5 class='mb-0'>Category Types</h5>
+                        <div class=""><i class="feather-pie-chart text-primary h4 mb-0"></i></div>
+                    </div>
+                    <canvas id="op" height="145"></canvas>
                 </div>
             </div>
         </div>
     </div>
 </div>
 
-<?php require('layout/footer.php');?>
+<?php require('layout/footer.php'); ?>
 <script>
     let dateAr = <?php echo json_encode($dateArr); ?>;
-    let orderCountArr =  <?php echo json_encode($orderArr); ?>;
-     console.log(orderCountArr);
+    let orderCountArr = <?php echo json_encode($orderArr); ?>;
     let customerCountArr = <?php echo json_encode($customerArr); ?>;
     var ctx = document.getElementById('ov').getContext('2d');
     var myChart = new Chart(ctx, {
         type: 'line',
         data: {
             labels: dateAr,
-            datasets: [
-                {
+            datasets: [{
                     label: 'Order Count',
                     data: orderCountArr,
                     backgroundColor: ['#EFF6FF'],
@@ -178,6 +196,38 @@ require('layout/header.php');
                 }
             }
         }
+    });
+    // right chat
+    let product_count = <?php echo json_encode($product_count); ?>;
+    let category_type = <?php echo json_encode($category_name); ?>;;
+
+    function generateRandomColor() {
+        var letters = '0123456789ABCDEF';
+        var color = '#';
+        for (var i = 0; i < 6; i++) {
+            color += letters[Math.floor(Math.random() * 16)];
+        }
+        return color;
+    }
+    var randomColor = [];
+    for(let i=0 ; i < product_count.length ; i++){
+        randomColor.push(generateRandomColor());
+    }
+
+    var op = document.getElementById('op').getContext('2d');
+
+    var opChart = new Chart(op, {
+        type: 'bar',
+        data: {
+            labels: category_type,
+            datasets: [{
+                label: 'Most Dataset',
+                data: product_count,
+                backgroundColor: randomColor,
+                hoverOffset: 4
+            }]
+        }
+
     });
 </script>
 </body>
