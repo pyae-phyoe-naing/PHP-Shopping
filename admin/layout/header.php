@@ -26,6 +26,7 @@ if (isset($_SESSION['user']) && $_SESSION['user']->role != 1) {
 </head>
 
 <body>
+    
     <div class="app-container app-theme-white body-tabs-shadow fixed-sidebar fixed-header mb-5">
         <div class="app-header header-shadow">
             <div class="app-header__logo">

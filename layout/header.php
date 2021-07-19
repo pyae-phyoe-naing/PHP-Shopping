@@ -15,7 +15,7 @@
 	<!-- meta character set -->
 	<meta charset="UTF-8">
 	<!-- Site Title -->
-	<title>HK Shop</title>
+	<title>PN-Shop</title>
 
 	<!-- CSS ============================================= -->
 	<link rel="stylesheet" href="<?php echo BASE_URL ?>asset/css/linearicons.css">
@@ -38,8 +38,9 @@
 				<div class="container">
 					<!-- Brand and toggle get grouped for better mobile display -->
 					<a class="navbar-brand logo_h" href="<?php echo BASE_URL; ?>index.php">
-						<h4><img src="	<?php echo BASE_URL; ?>asset/img/logo.png" alt="">
-							<h4>
+						<h3 class="font-weight-bold" style="color:#E4A228;font-family:Arial;letter-spacing:1px">
+							PN-SHOPPING
+						<h3>
 					</a>
 					<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 						<span class="icon-bar"></span>

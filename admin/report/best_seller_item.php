@@ -37,7 +37,7 @@ require('../layout/header.php');
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
-                    <table class="table" id="best_seller_item" class="display" style="width:100%">
+                    <table class="table table-responsive-sm" id="best_seller_item" class="display" style="width:100%">
                         <thead>
                             <tr>
                                 <th>No</th>

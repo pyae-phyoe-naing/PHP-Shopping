@@ -114,7 +114,7 @@ require('layout/header.php');
             <div class="card overflow-hidden shadow mb-4">
                 <div class="">
                     <div class="d-flex justify-content-between align-items-center p-3 ">
-                        <h5 class='mb-0'>Order - Customer</h5>
+                        <h5  class='mb-0 order-chart'>Order - Customer</h5>
                         <div class="">
                             <img width="42" class="rounded-circle" alt="">
                             <?php

@@ -1141,7 +1141,7 @@ h1, h2, h3, h4, h5, h6 {
         margin-left: 35px; }
         @media (max-width: 991px) {
           .header_area .navbar .nav.navbar-nav.navbar-right li:first-child {
-            display: none; } }
+            display: inline;right:40px;margin-bottom: 20px; } }
       .header_area .navbar .nav.navbar-nav.navbar-right li span {
         color: #222222;
         line-height: 80px;
@@ -5457,7 +5457,9 @@ label {
   margin-top: 50px; }
   @media (max-width: 414px) {
     .comments-area {
-      padding: 50px 8px; } }
+      padding: 50px 8px; }
+   
+    }
   .comments-area h4 {
     text-align: center;
     margin-bottom: 50px;
@@ -5802,3 +5804,4 @@ label {
   position: absolute !important;
   font-size: 11px;
 }
+

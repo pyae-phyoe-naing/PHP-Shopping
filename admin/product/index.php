@@ -42,7 +42,7 @@ require('../layout/header.php');
                     <p>
                         <a href="<?php echo BASE_URL; ?>admin/product/create.php" class="btn btn-success">create product</a>
                     </p>
-                    <table class="table table-bordered">
+                    <table class="table table-bordered table-responsive-sm">
                         <thead>
                             <tr>
                                 <th>No</th>
